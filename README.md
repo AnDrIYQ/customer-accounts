@@ -9,12 +9,13 @@ cd app
 npm start (For watch) (Port: 3000)
 
 
-
+----------------------------
 npm install -g serve (Once)
+----------------------------
 
-serve -s build (For build) (Port: 8080)
+serve -s build (For build)
 
 cd build
 
-pm2 serve --spa
+pm2 serve --spa (Port: 8080)
 
