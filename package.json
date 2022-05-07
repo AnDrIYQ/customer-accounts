@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/AnDrIYQ/customer-accounts/issues"
   },
-  "homepage": "https://github.com/AnDrIYQ/customer-accounts#readme"
+  "homepage": "https://github.com/AnDrIYQ/customer-accounts#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
 }
