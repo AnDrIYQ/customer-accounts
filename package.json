@@ -1,0 +1,19 @@
+{
+  "name": "customer-accounts",
+  "version": "1.0.0",
+  "description": "SSH root@31.131.24.72",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnDrIYQ/customer-accounts.git"
+  },
+  "author": "Mr.Saiwi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnDrIYQ/customer-accounts/issues"
+  },
+  "homepage": "https://github.com/AnDrIYQ/customer-accounts#readme"
+}
