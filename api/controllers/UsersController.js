@@ -1,7 +1,10 @@
+const UserModel = require('../models/user-model');
+
 class UserController {
     async get(req, res, next) {
         try {
-            res.status(200).json({status: true, message: 'Work'})
+            let users = await UserModel.find({});
+            res.json(users);
         } catch(e) {
             next(e);
         }

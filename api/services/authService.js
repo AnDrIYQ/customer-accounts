@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error')
 const tokenService = require('../services/tokenService')
+const {token} = require("morgan");
 
 class AuthService {
     async register (email, password) {
@@ -25,6 +26,22 @@ class AuthService {
         }
     }
     async login (email, password) {
+        const user = await UserModel.findOne({email});
+        if (!user) {
+            throw ApiError.BadRequest('This user does not exists');
+        }
+        const isPassEquals = await bcrypt.compare(password, user.password);
+        if (!isPassEquals) {
+            throw ApiError.BadRequest('Invalid password');
+        }
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({...userDto});
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user: userDto
+        }
     }
 }
 
