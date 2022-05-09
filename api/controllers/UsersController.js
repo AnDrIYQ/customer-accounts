@@ -3,35 +3,35 @@ class UserController {
         try {
             res.status(200).json({status: true, message: 'Work'})
         } catch(e) {
-            res.status(500).json({status: false, message: e});
+            next(e);
         }
     }
     async put(req, res, next) {
         try {
 
         } catch(e) {
-
+            next(e);
         }
     }
     async edit(req, res, next) {
         try {
 
         } catch(e) {
-
+            next(e);
         }
     }
     async delete(req, res, next) {
         try {
 
         } catch(e) {
-
+            next(e);
         }
     }
     async drop(req, res, next) {
         try {
 
         } catch(e) {
-
+            next(e);
         }
     }
 }

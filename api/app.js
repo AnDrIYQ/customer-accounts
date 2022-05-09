@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('morgan');
 
+// Middlewares imports
+const errorMiddleware = require('./middlewares/error-middleware');
+
 // Routes imports
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
@@ -22,20 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authRouter);
 app.use(usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// Uses middlewares
+app.use(errorMiddleware);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // 404
-  res.status(err.status || 500);
-  res.json({status: false, code: err.status});
-});
 
 module.exports = app;
