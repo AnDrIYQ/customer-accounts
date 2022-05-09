@@ -13,7 +13,7 @@ class AuthController {
     }
     async login(req, res, next) {
         try {
-
+            
         } catch(e) {
             next(e);
         }
