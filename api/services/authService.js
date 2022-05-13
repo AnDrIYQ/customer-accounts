@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error')
 const tokenService = require('../services/tokenService')
-const {token} = require("morgan");
+const {ObjectId} = require("mongodb");
 
 class AuthService {
     async register (email, password) {
@@ -34,6 +34,32 @@ class AuthService {
         if (!isPassEquals) {
             throw ApiError.BadRequest('Invalid password');
         }
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({...userDto});
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user: userDto
+        }
+    }
+    async logout(refreshToken) {
+        const token = await tokenService.removeToken(refreshToken);
+        return token;
+    }
+    async refresh(token) {
+        if (!token) {
+            throw ApiError.UnauthorizedError();
+        }
+        const userData = tokenService.validateRefreshToken(token);
+        if (!userData) {
+            await tokenService.removeToken(token);
+        }
+        const tokenFromDb = await tokenService.findToken(token);
+        if (!tokenFromDb) {
+            throw ApiError.UnauthorizedError();
+        }
+        const user = await UserModel.findById(ObjectId(userData.id));
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
