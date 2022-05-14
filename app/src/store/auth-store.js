@@ -1,9 +1,9 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from "mobx";
 import AuthService from "../services/AuthService";
-import axios from "axios";
-import {$refreshApi, API_URL} from "../http";
+import { $refreshApi } from "../http";
 
-export default class Store {
+export default class AuthStore {
+    // Fields
     user = {};
     isAuth = false;
 
@@ -11,6 +11,7 @@ export default class Store {
         makeAutoObservable(this);
     }
 
+    // Mutations
     setAuth(auth) {
         this.isAuth = auth;
     }
@@ -19,6 +20,7 @@ export default class Store {
         this.user = user;
     }
 
+    // Actions (async)
     async login(email, password) {
         try {
             const response = await AuthService.login(email, password);

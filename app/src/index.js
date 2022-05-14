@@ -1,24 +1,33 @@
 import React, {createContext} from 'react';
+import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import './styles/styles.scss'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'flowbite';
-import Store from "./store/store";
 
-const store = new Store();
+// Store imports
+import AuthStore from "./store/auth-store";
+import HomeStore from "./store/Home/home-store";
 
+// Store instances
+const authStore = new AuthStore();
+const homeStore = new HomeStore();
+
+// Stores merge in context
 export const Context = createContext({
-   store
+   authStore,
+   homeStore
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <Context.Provider value={{store}}>
-          <App />
-      </Context.Provider>
-  </React.StrictMode>
+    // Stores gives
+    <Context.Provider value={{authStore, homeStore}}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Context.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
