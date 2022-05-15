@@ -1,7 +1,7 @@
 const {validationResult} = require("express-validator");
 const ApiError = require("../exceptions/api-error");
 
-class TariffController {
+class MessageController {
     async get(req, res, next) {
         try {
             const validationErrors = validationResult(req);
@@ -12,7 +12,17 @@ class TariffController {
             next(e);
         }
     }
-    async getById(req, res, next) {
+    async getForAdmin(req, res, next) {
+        try {
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+            }
+        } catch(e) {
+            next(e);
+        }
+    }
+    async getForCustomer(req, res, next) {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
@@ -29,13 +39,6 @@ class TariffController {
             next(e);
         }
     }
-    async update(req, res, next) {
-        try {
-
-        } catch(e) {
-            next(e);
-        }
-    }
     async remove(req, res, next) {
         try {
 
@@ -45,4 +48,4 @@ class TariffController {
     }
 }
 
-module.exports = new TariffController();
+module.exports = new MessageController();

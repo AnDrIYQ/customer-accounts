@@ -1,13 +1,30 @@
 const {validationResult} = require("express-validator");
 const ApiError = require("../exceptions/api-error");
 
-class ConfigController {
+class CustomerController {
     async get(req, res, next) {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
+        } catch(e) {
+            next(e);
+        }
+    }
+    async getById(req, res, next) {
+        try {
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+            }
+        } catch(e) {
+            next(e);
+        }
+    }
+    async post(req, res, next) {
+        try {
+
         } catch(e) {
             next(e);
         }
@@ -28,4 +45,4 @@ class ConfigController {
     }
 }
 
-module.exports = new ConfigController();
+module.exports = new CustomerController();

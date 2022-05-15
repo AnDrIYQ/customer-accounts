@@ -14,13 +14,19 @@ export const $refreshApi = axios.create({
 
 $api.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('app_token')}`
+    config.headers.ContentType = `multipart/form-data`;
     return config;
 })
 
 $api.interceptors.response.use(config => {
     return config;
 },  async (error) => {
-    let originalRequest = error.config();
+    let originalRequest;
+    try {
+        originalRequest = error.config();
+    } catch (e) {
+        return null;
+    }
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
         originalRequest._isRetry = true;
         try {

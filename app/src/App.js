@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
       if (localStorage.getItem('app_token')) {
-          authStore.checkAuth().then(() => navigate.go(0));
+          authStore.checkAuth().then(() => navigate(1));
       }
   })
 

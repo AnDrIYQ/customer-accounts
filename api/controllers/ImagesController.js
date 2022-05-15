@@ -1,7 +1,7 @@
 const {validationResult} = require("express-validator");
 const ApiError = require("../exceptions/api-error");
 
-class ConfigController {
+class ImageController {
     async get(req, res, next) {
         try {
             const validationErrors = validationResult(req);
@@ -12,20 +12,6 @@ class ConfigController {
             next(e);
         }
     }
-    async update(req, res, next) {
-        try {
-
-        } catch(e) {
-            next(e);
-        }
-    }
-    async remove(req, res, next) {
-        try {
-
-        } catch(e) {
-            next(e);
-        }
-    }
 }
 
-module.exports = new ConfigController();
+module.exports = new ImageController();

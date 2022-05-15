@@ -14,4 +14,7 @@ module.exports = class ApiError extends Error {
     static BadRequest(message, errors) {
         return new ApiError(400, message, errors);
     }
+    static AccessError() {
+        return new ApiError(403, 'Access denied');
+    }
 }

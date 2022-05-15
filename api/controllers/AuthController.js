@@ -9,8 +9,8 @@ class AuthController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
-            const {email, password} = req.body;
-            const userData = await authService.register(email, password);
+            const {email, password, username, bio} = req.body;
+            const userData = await authService.register(email, password, username, bio);
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true})
             res.status(200).json({status: true, data: userData});
         } catch(e) {
@@ -47,6 +47,20 @@ class AuthController {
             const userData = await authService.refresh(refreshToken);
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true})
             return res.status(200).json(userData);
+        } catch(e) {
+            next(e);
+        }
+    }
+    async registerAdmin(req, res, next) {
+        try {
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+            }
+            const {email, password, username, bio} = req.body;
+            const userData = await authService.registerAdmin(email, password, username, bio);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true})
+            res.status(200).json({status: true, data: userData});
         } catch(e) {
             next(e);
         }
