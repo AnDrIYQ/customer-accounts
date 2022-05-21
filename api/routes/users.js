@@ -12,7 +12,6 @@ const Router = require('express').Router
 const router = new Router();
 
 // Actions
-router.post('/', authMiddleware, (req, res) => {});
 
 // Exports
 module.exports = router;

@@ -15,10 +15,8 @@ const router = new Router();
 
 // Actions
 router.get('/messages-customer-admin/:customer/:admin', authMiddleware, MessageController.getForCustomer);
-router.get('/messages-admin-customer/:admin/:customer', authMiddleware, roleMiddleware, MessageController.getForAdmin);
 router.post('/messages/write',
     body('message').isLength({min: 4, max: 1000}),
-    body('from').not().isEmpty(),
     body('to').not().isEmpty(),
     authMiddleware, roleMiddleware, MessageController.post);
 

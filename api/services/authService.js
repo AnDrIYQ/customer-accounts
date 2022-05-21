@@ -37,7 +37,7 @@ class AuthService {
         const customerDTO = new CustomerDto(newCustomer);
         const configDTO = new ConfigDto(customerConfig);
 
-        const tokens = tokenService.generateTokens({...userDTO, ...customerDTO, config: {...configDTO}})
+        const tokens = tokenService.generateTokens({...userDTO, ...customerDTO, ...configDTO})
         await tokenService.saveToken(userDTO.id, tokens.refreshToken);
 
         return {
@@ -79,7 +79,7 @@ class AuthService {
 
         const configData = new ConfigDto(config);
         const userDto = new UserDto(user);
-        const tokens = tokenService.generateTokens({...userDto, admin: adminData, customer: customerData});
+        const tokens = tokenService.generateTokens({...userDto, admin: adminData, customer: customerData, config: configData});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return {
@@ -165,7 +165,7 @@ class AuthService {
         const adminDTO = new AdminDto(newAdmin);
         const configDTO = new ConfigDto(adminConfig);
 
-        const tokens = tokenService.generateTokens({...userDTO, ...adminDTO, config: {...configDTO}})
+        const tokens = tokenService.generateTokens({...userDTO, ...adminDTO, ...configDTO})
         await tokenService.saveToken(userDTO.id, tokens.refreshToken);
 
         return {

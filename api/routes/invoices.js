@@ -15,15 +15,18 @@ const router = new Router();
 
 // Actions
 router.get('/invoices', authMiddleware, roleMiddleware, InvoiceController.get);
-router.get('/invoices/:id', authMiddleware, InvoiceController.getById);
+router.get('/invoices/:from/:limit', authMiddleware, roleMiddleware, InvoiceController.get);
 
-router.post('/invoices/add/:customer',
+router.get('/customer-invoices/', authMiddleware, InvoiceController.getForCustomer);
+router.get('/customer-invoices/:from/:limit', authMiddleware, InvoiceController.getForCustomer);
+
+router.post('/invoices/charge/:customer',
     body('description').isLength({min: 6, max: 32}),
-    body('items').isJSON(),
     authMiddleware, roleMiddleware, InvoiceController.post);
-router.put('/invoices/paid/:id', authMiddleware, roleMiddleware, InvoiceController.makePaid);
-router.put('/invoices/was-read/:id', authMiddleware, InvoiceController.read);
 router.delete('/invoices/delete/:id', authMiddleware, roleMiddleware, InvoiceController.remove);
+
+router.put('/invoice-paid/:id', authMiddleware, roleMiddleware, InvoiceController.makePaid);
+router.put('/invoice-was-read/:id', authMiddleware, InvoiceController.read);
 
 // Exports
 module.exports = router;

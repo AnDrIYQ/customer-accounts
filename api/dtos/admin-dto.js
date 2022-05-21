@@ -7,5 +7,6 @@ module.exports = class AdminDto {
         this.id = model._id;
         this.username = model.username;
         this.bio = model.bio;
+        this.config = model.config;
     }
 }

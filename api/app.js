@@ -50,5 +50,16 @@ app.use(tariffsRouter);
 // Uses middlewares
 app.use(errorMiddleware);
 
+const server = require('http').Server(app);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: process.env.CLIENT_URL,
+    }
+});
+
+server.listen(process.env.SOCKET_PORT, () => {
+    console.log(`Listening on ${process.env.SOCKET_PORT}`);
+});
+EVENT_BUS = io
 
 module.exports = app;

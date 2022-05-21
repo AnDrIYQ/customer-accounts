@@ -14,14 +14,15 @@ const Router = require('express').Router
 const router = new Router();
 
 // Actions
+router.get('/currencies/:from/:limit', authMiddleware, CurrencyController.get);
 router.get('/currencies', authMiddleware, CurrencyController.get);
 router.get('/currencies/:id', authMiddleware, CurrencyController.getById);
 
 router.post('/currencies/add',
-    body('name').isLength({min: 4, max: 10}),
+    body('name').isLength({min: 3, max: 3}),
     body('symbol').optional().isLength({max: 1, min: 1}),
     authMiddleware, roleMiddleware, CurrencyController.post);
-router.put('/currencies/update',
+router.put('/currencies/:id/update',
     body('name').isLength({min: 4, max: 10}),
     body('symbol').optional().isLength({max: 1, min: 1}),
     authMiddleware, roleMiddleware, CurrencyController.update);

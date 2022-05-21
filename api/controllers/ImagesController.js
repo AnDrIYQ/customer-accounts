@@ -8,6 +8,7 @@ class ImageController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
+
         } catch(e) {
             next(e);
         }

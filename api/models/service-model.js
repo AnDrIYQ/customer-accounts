@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const ServiceSchema = new Schema({
     name: {type: String, required: true},
-    description: {type: String, required: false},
+    description: {type: String, required: false, default: ''},
     tariff: {type: Schema.Types.ObjectId, rel: 'Tariff'},
     customer: {type: Schema.Types.ObjectId, rel: 'Customer'},
     date: {type: Date, default: Date.now()},

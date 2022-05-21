@@ -17,7 +17,7 @@ const router = new Router();
 router.put('/admins/update',
     body('username').isLength({min: 4, max: 32}),
     body('bio').optional().isLength({min: 4, max: 32}),
-    authMiddleware, roleMiddleware,  AdminController.update);
+    authMiddleware, roleMiddleware, AdminController.update);
 
 // Exports
 module.exports = router;

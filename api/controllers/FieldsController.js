@@ -8,6 +8,7 @@ class FieldController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
+            res.status(200).json(true);
         } catch(e) {
             next(e);
         }

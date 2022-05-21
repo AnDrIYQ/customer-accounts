@@ -17,4 +17,7 @@ module.exports = class ApiError extends Error {
     static AccessError() {
         return new ApiError(403, 'Access denied');
     }
+    static NotChanged() {
+        return new ApiError(503, 'Data Base not updated');
+    }
 }

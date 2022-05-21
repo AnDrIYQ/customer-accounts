@@ -15,12 +15,14 @@ const router = new Router();
 
 // Actions
 router.get('/customers', authMiddleware, roleMiddleware, CustomerController.get);
+router.get('/customers/:from/:limit', authMiddleware, roleMiddleware, CustomerController.get);
 router.get('/customers/:id', authMiddleware, CustomerController.getById);
 
-router.delete('/customers/delete/:id', authMiddleware, CustomerController.remove);
+router.delete('/customers/delete', authMiddleware, CustomerController.remove);
 router.put('/customers/update',
     body('username').isLength({min: 4, max: 32}),
     body('bio').optional().isLength({min: 4, max: 32}),
+    body('password').optional().isLength({min: 6, max: 32}),
     authMiddleware, CustomerController.update);
 
 // Exports
