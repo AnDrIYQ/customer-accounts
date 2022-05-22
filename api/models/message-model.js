@@ -5,7 +5,7 @@ const MessageSchema = new Schema({
     from: {type: Schema.Types.ObjectId, rel: 'Admin'},
     to: {type: Schema.Types.ObjectId, rel: 'Customer'},
     date: {type: Date, default: Date.now()},
-    invoice: {type: Schema.Types.ObjectId, rel: 'Invoice', required: false}
+    invoice: {type: Schema.Types.Mixed, rel: 'Invoice', required: false}
 })
 
 module.exports = model('Message', MessageSchema);

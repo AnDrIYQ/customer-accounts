@@ -10,15 +10,6 @@ import 'flowbite';
 import AuthStore from "./store/auth-store";
 import HomeStore from "./store/Home/home-store";
 
-// Socket connect
-const SOCKET_URL = `http://31.131.24.72:3330`;
-const io = require('socket.io-client');
-// Global event bus
-window.EVENT_BUS = io.connect(SOCKET_URL);
-window.EVENT_BUS.on('connect', () => {
-    console.log('Connected to Event Bus...');
-});
-
 // Store instances
 const authStore = new AuthStore();
 const homeStore = new HomeStore();

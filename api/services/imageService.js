@@ -15,6 +15,9 @@ const storage = multer.diskStorage({
 })
 
 class ImageService {
+    async get() {
+        return ImageModel.find({});
+    }
     uploadMiddleware (field) {
         return multer({
             limits: {fileSize: 200 * 1024 * 1024},

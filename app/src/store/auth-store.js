@@ -49,6 +49,9 @@ export default class AuthStore {
             localStorage.removeItem('app_token');
             this.setAuth(false);
             this.setUser({});
+            window.EVENT_BUS.disconnect();
+            window.EVENT_BUS = null
+            console.log(`Disconnected => ` + window.EVENT_BUS)
         } catch(e) {
             console.log(e.response?.data?.message);
         }

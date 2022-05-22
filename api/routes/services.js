@@ -24,7 +24,7 @@ router.get('/services-get/:id', authMiddleware, roleMiddleware, ServiceControlle
 
 router.post('/services/add',
     body('name').not().isEmpty(),
-    check('date_to').isISO8601(),
+    check('date_to').optional().isISO8601(),
     body('description').optional().isLength({min: 4, max: 32}),
     check('date').optional().isISO8601(),
     body('tariff').isString(),

@@ -1,6 +1,8 @@
 const {validationResult} = require("express-validator");
 const ApiError = require("../exceptions/api-error");
 
+const fieldsService = require('../services/fieldService')
+
 class FieldController {
     async get(req, res, next) {
         try {
@@ -8,7 +10,8 @@ class FieldController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
-            res.status(200).json(true);
+            const response = await fieldsService.get();
+            res.status(200).json(response);
         } catch(e) {
             next(e);
         }

@@ -30,6 +30,8 @@ class ConfigService {
         }
         config.theme_color = newData.theme_color;
         config.notifications = newData.notifications;
+        config.currency = newData.currency;
+        config.image = newData.image;
         const isSaved = await config.save();
         return {
             status: !!isSaved,
@@ -55,6 +57,8 @@ class ConfigService {
         }
         config.theme_color = newData.theme_color;
         config.notifications = newData.notifications;
+        config.currency = newData.currency;
+        config.image = newData.image;
         const isSaved = await config.save();
         return {
             status: !!isSaved,
@@ -74,13 +78,17 @@ class ConfigService {
     async reset (id, account) {
         return await this.updateConfigById(id, account, {
             theme_color: DEFAULT_CONFIG.theme_color,
-            notifications: DEFAULT_CONFIG.notifications
+            notifications: DEFAULT_CONFIG.notifications,
+            currency: DEFAULT_CONFIG.notifications,
+            image: DEFAULT_CONFIG.image,
         })
     }
     async update (account, newData) {
         return await this.updateConfig(account, {
             theme_color: newData.theme_color,
-            notifications: newData.notifications
+            notifications: newData.notifications,
+            currency: newData.currency,
+            image: process.env.API_URL + '/public/images/' + newData.image
         })
     }
 }

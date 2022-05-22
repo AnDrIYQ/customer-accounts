@@ -49,15 +49,23 @@ class ServiceService {
         const newService = new ServiceModel({
             name,
             tariff: ObjectId(tariff),
-            customer: ObjectId(customerId),
-            date_to: new Date(date_to),
+            customer: ObjectId(customerId)
         })
         if (description) {
             newService.description = description
         }
+        newService.date = new Date();
         if (date) {
             newService.date = new Date(date)
         }
+        let dateTo;
+        if (date_to) {
+            dateTo = new Date(date_to);
+        }
+        if (!dateTo) {
+            dateTo = new Date(new Date().setMonth(new Date().getMonth() + Number(fromTariff.terms)));
+        }
+        newService.date_to = dateTo;
         newService.price = Number(fromTariff.price) * Number(fromTariff.terms);
         const created = await newService.save();
         const tariffData = new TariffDto(fromTariff);

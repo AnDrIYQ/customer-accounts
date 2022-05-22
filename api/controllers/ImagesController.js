@@ -1,5 +1,6 @@
 const {validationResult} = require("express-validator");
 const ApiError = require("../exceptions/api-error");
+const imageService = require('../services/imageService')
 
 class ImageController {
     async get(req, res, next) {
@@ -8,7 +9,8 @@ class ImageController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
-
+            const response = await imageService.get()
+            res.status(200).json(response);
         } catch(e) {
             next(e);
         }

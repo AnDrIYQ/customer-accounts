@@ -13,6 +13,7 @@ import AuthGuard from "./guards/AuthGuard";
 import AuthLayout from "./layouts/AuthLayout";
 import Register from "./views/Register/Register";
 import Login from "./views/Login/Login";
+import io from "socket.io-client";
 
 function App() {
   const navigate = useNavigate();
@@ -20,7 +21,34 @@ function App() {
 
   useEffect(() => {
       if (localStorage.getItem('app_token')) {
-          authStore.checkAuth().then(() => navigate(1));
+          authStore.checkAuth().then(() => {
+              // Socket connect
+              const SOCKET_URL = `http://31.131.24.72:3330`;
+              const io = require('socket.io-client');
+              // Global event bus
+              const customer = JSON.parse(atob(localStorage.getItem('app_token')?.split('.')[1])).customer
+              const chanel = customer?.id
+              if (window.EVENT_BUS) {
+                  return false;
+              }
+              window.EVENT_BUS = io.connect(SOCKET_URL, {
+                  query: { roomName: chanel || false }
+              });
+              window.EVENT_BUS.on('connect', () => {
+                  // Subscript on This account events
+                  console.log('Connected to Event Bus... ');
+              });
+              window.EVENT_BUS.on('connected', (data) => {
+                  // Subscript on This account events
+                  console.log('Connect customer id ==> ' + data);
+              });
+              window.EVENT_BUS.on('message', (message) => {
+                  console.log(message);
+              })
+              window.EVENT_BUS.on('info', (data) => {
+                  console.log(data)
+              })
+          });
       }
   })
 

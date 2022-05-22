@@ -14,7 +14,8 @@ const Router = require('express').Router
 const router = new Router();
 
 // Actions
-router.get('/messages-customer-admin/:customer/:admin', authMiddleware, MessageController.getForCustomer);
+router.get('/messages-customer/:customer', authMiddleware, MessageController.getForCustomer);
+router.get('/message/:id', authMiddleware, MessageController.getById);
 router.post('/messages/write',
     body('message').isLength({min: 4, max: 1000}),
     body('to').not().isEmpty(),

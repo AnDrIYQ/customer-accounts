@@ -5,12 +5,14 @@ const messageService = require('../services/messageService')
 const getAccount = require('../data-functions/account-info')
 
 class MessageController {
-    async get(req, res, next) {
+    async getById(req, res, next) {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
+            const response = await messageService.getById(getAccount(req), req.params.id);
+            res.status(200).json(response);
         } catch(e) {
             next(e);
         }
@@ -21,6 +23,8 @@ class MessageController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
+            const response = await messageService.getCustomerMessages(getAccount(req), req.params.customer);
+            res.status(200).json(response);
         } catch(e) {
             next(e);
         }
@@ -44,7 +48,12 @@ class MessageController {
     }
     async remove(req, res, next) {
         try {
-
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+            }
+            const response = await messageService.removeMessage(getAccount(req), req.params.id);
+            res.status(200).json(response);
         } catch(e) {
             next(e);
         }

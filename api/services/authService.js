@@ -1,6 +1,7 @@
 const UserModel = require('../models/user-model');
 const AdminModel = require('../models/admin-model');
 const CustomerModel = require('../models/customer-model');
+const TokenModel = require('../models/token-model');
 const ConfigModel = require('../models/config-model');
 const bcrypt = require('bcrypt');
 const UserDto = require('../dtos/user-dto');
@@ -174,6 +175,11 @@ class AuthService {
             admin: adminDTO,
             config: configDTO
         }
+    }
+    async remove(email) {
+        const account = await UserModel.findOne({email});
+        await TokenModel.remove({user: account._id});
+        return true;
     }
 }
 

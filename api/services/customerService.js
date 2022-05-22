@@ -1,10 +1,13 @@
 const CustomerModel = require('../models/customer-model');
+const ConfigModel = require('../models/config-model');
+const ServiceModel = require('../models/service-model');
 const UserModel = require("../models/user-model");
+const MessageModel = require("../models/message-model");
 const CustomerDto = require('../dtos/customer-dto');
 const ApiError = require('../exceptions/api-error')
 const {ObjectId} = require("mongodb");
 const compareAccount = require('../data-functions/compare-account');
-const UserDto = require("../dtos/user-dto");
+const authService = require('../services/authService')
 const bcrypt = require("bcrypt");
 
 class CustomerService {
@@ -54,7 +57,17 @@ class CustomerService {
         }
     }
     async remove (account) {
-
+        if (!account.customer || !account.customer.id) {
+            throw ApiError.AccessError();
+        }
+        const customerAccountDeleted = await authService.remove(account.email);
+        await CustomerModel.findOneAndDelete({customer_status: account.customer_status});
+        await ConfigModel.findOneAndDelete({});
+        await MessageModel.remove({to: account.customer.id});
+        await ServiceModel.remove({customer: account.customer.id});
+        return {
+            status: !!customerAccountDeleted
+        }
     }
 }
 

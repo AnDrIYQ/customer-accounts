@@ -18,12 +18,8 @@ const router = new Router();
 router.get('/configs/:id', authMiddleware, roleMiddleware, ConfigController.get);
 router.delete('/configs/delete/:id', authMiddleware, ConfigController.remove);
 router.put('/configs/update',
-    oneOf([
-        check('theme_color').isHexColor(),
-        check('theme_color').custom(value => checkRGB(value))
-    ]),
-    body('notifications').optional().isBoolean(),
-    authMiddleware, uploadImages.uploadMiddleware('image'), ConfigController.update);
+    uploadImages.uploadMiddleware('image'),
+    authMiddleware, ConfigController.update);
 
 // Exports
 module.exports = router;

@@ -56,10 +56,24 @@ const io = require('socket.io')(server, {
         origin: process.env.CLIENT_URL,
     }
 });
-
 server.listen(process.env.SOCKET_PORT, () => {
     console.log(`Listening on ${process.env.SOCKET_PORT}`);
 });
-EVENT_BUS = io
+EVENT_BUS = null
+io.on('connection', (socket) => {
+    let query = socket.handshake.query;
+    let roomName = query.roomName;
+    if (roomName === 'false') {
+        socket.emit('info', "Account is not a customer")
+        return;
+    }
+    socket.join(roomName);
+    EVENT_BUS = {
+        io,
+        socket,
+        room: roomName
+    }
+    socket.emit('connected', query.roomName);
+})
 
 module.exports = app;
