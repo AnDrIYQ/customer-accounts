@@ -2,7 +2,6 @@ const dotenv = require('dotenv').config();
 
 // Database
 const mongoose = require('mongoose');
-
 const app = require('./api/app');
 
 // API
