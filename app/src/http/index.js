@@ -14,7 +14,6 @@ export const $refreshApi = axios.create({
 
 $api.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('app_token')}`
-    config.headers.ContentType = `multipart/form-data`;
     return config;
 })
 

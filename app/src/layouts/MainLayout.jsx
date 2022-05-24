@@ -4,25 +4,22 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Button} from 'flowbite-react';
 
+// {/*<ComponentTransition*/}
+// {/*    enterAnimation={AnimationTypes.fade.enter}*/}
+// {/*    exitAnimation={AnimationTypes.fade.exit}*/}
+// {/*>*/}
+// {/*</ComponentTransition>*/}
+
 import {ComponentTransition, AnimationTypes} from 'react-component-transition';
+import Notifications from "../components/parts/Notifications";
+import Modal from "../components/atomary/floats/Modal";
 
 const MainLayout = () => {
     const { authStore } = useContext(Context)
     return (
         <>
-            <ComponentTransition
-                enterAnimation={AnimationTypes.fade.enter}
-                exitAnimation={AnimationTypes.fade.exit}
-            >
-                {authStore.isAuth ?
-                    <>
-                        <h1 className="text-white text-xl m-4">Користувач {authStore.user.email} увійшов</h1>
-                        <Button color="light" className="m-4" onClick={() => authStore.logout()}>Вийти</Button>
-                    </>
-                    :
-                    <span className="text-red-500">Не авторизовано</span>
-                }
-            </ComponentTransition>
+            <Notifications />
+            <Modal />
             <Outlet />
         </>
     );

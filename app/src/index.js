@@ -8,22 +8,28 @@ import 'flowbite';
 
 // Store imports
 import AuthStore from "./store/auth-store";
-import HomeStore from "./store/Home/home-store";
+import AppStore from "./store/App/App";
+import NotificationsStore from "./store/Notifications/Notifications";
 
 // Store instances
 const authStore = new AuthStore();
-const homeStore = new HomeStore();
+const appStore = new AppStore();
+const notificationsStore = new NotificationsStore();
 
 // Stores merge in context
+const storeList = {
+    notificationsStore,
+    authStore,
+    appStore,
+};
 export const Context = createContext({
-   authStore,
-   homeStore
+   ...storeList
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // Stores gives
-    <Context.Provider value={{authStore, homeStore}}>
+    <Context.Provider value={{...storeList}}>
         <BrowserRouter>
             <App />
         </BrowserRouter>

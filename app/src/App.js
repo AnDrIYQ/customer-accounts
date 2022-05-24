@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 
 // Routes imports
-import Home from "./views/Home/Home";
+import Home from "./views/Dashboard/Dashboard";
 import {useContext, useEffect} from "react";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
@@ -13,10 +13,9 @@ import AuthGuard from "./guards/AuthGuard";
 import AuthLayout from "./layouts/AuthLayout";
 import Register from "./views/Register/Register";
 import Login from "./views/Login/Login";
-import io from "socket.io-client";
+import Dashboard from "./views/Dashboard/Dashboard";
 
 function App() {
-  const navigate = useNavigate();
   const { authStore } = useContext(Context);
 
   useEffect(() => {
@@ -38,16 +37,6 @@ function App() {
                   // Subscript on This account events
                   console.log('Connected to Event Bus... ');
               });
-              window.EVENT_BUS.on('connected', (data) => {
-                  // Subscript on This account events
-                  console.log('Connect customer id ==> ' + data);
-              });
-              window.EVENT_BUS.on('message', (message) => {
-                  console.log(message);
-              })
-              window.EVENT_BUS.on('info', (data) => {
-                  console.log(data)
-              })
           });
       }
   })
@@ -56,8 +45,8 @@ function App() {
       <Routes>
           <Route element={<AuthGuard redirectTo="/login" auth={authStore.isAuth} />}>
               <Route path="/" element={<MainLayout />}>
-                  <Route path="/" element={<Home />} />
                   <Route path="/config" element={<Config />} />
+                  <Route path="/" element={<Dashboard />} />
               </Route>
           </Route>
           <Route element={<AuthGuard redirectTo="/" auth={!authStore.isAuth} />}>
