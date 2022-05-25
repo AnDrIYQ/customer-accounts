@@ -5,7 +5,6 @@ export default class AppStore {
         makeAutoObservable(this);
     }
     // Fields
-    
 
     // Mutators
 

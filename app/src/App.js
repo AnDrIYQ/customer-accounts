@@ -14,11 +14,17 @@ import AuthLayout from "./layouts/AuthLayout";
 import Register from "./views/Register/Register";
 import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
+import {hexToHSL} from "./functions/to-hsl";
 
 function App() {
   const { authStore } = useContext(Context);
 
   useEffect(() => {
+      const hsl = hexToHSL('#353aab');
+      document.documentElement.style.setProperty('--hue', hsl[0])
+      document.documentElement.style.setProperty('--sat', hsl[1])
+      document.documentElement.style.setProperty('--light', hsl[2])
+
       if (localStorage.getItem('app_token')) {
           authStore.checkAuth().then(() => {
               // Socket connect

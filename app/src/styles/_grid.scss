@@ -4,6 +4,10 @@ body {
 
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 p {
   margin: 0;
 }
@@ -49,4 +53,20 @@ div {
 
 .notifications-block {
   z-index: 100;
+}
+
+:root {
+  --hue: 227;
+  --sat: 74;
+  --light: 35;
+  --threshold: 65;
+  --border-threshold: 80;
+}
+
+.theme_color {
+  // Regenerated color
+  --h: var(--hue);
+  background: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+  --switch: calc((var(--light) - var(--threshold)) * -100%);
+  color: hsl(0, 0%, var(--switch));
 }

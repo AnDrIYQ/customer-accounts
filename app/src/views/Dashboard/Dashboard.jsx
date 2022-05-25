@@ -2,6 +2,7 @@ import React, {useContext, useRef, useState} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {Button} from "flowbite-react";
+import {hexToHSL} from "../../functions/to-hsl";
 
 function Dashboard() {
     const fileField = useRef(null);
