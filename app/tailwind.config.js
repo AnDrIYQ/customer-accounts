@@ -4,6 +4,9 @@ module.exports = {
     colors: {
     },
     extend: {
+      maxWidth: {
+        'button': '120px'
+      },
       spacing: {
         '4': '4px',
         '8': '8px',

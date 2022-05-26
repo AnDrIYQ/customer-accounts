@@ -1,12 +1,12 @@
 import React, {useContext, useRef, useState} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import {Button} from "flowbite-react";
 import {hexToHSL} from "../../functions/to-hsl";
+import Button from "../../components/atomary/typography/Button";
 
 function Dashboard() {
     const fileField = useRef(null);
-
+    const {authStore} = useContext(Context);
     // const uploadFile = () => {
     //     const data = new FormData();
     //     Object.values(fileField.current.files).forEach(file => {
@@ -20,7 +20,7 @@ function Dashboard() {
 
     return (
         <>
-            <h1>Content</h1>
+            <Button action={() => authStore.logout()}>Logout</Button>
         </>
     );
 }

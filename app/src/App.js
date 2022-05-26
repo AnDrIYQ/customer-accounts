@@ -1,10 +1,9 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
 
 // Layouts imports
 import MainLayout from "./layouts/MainLayout";
 
 // Routes imports
-import Home from "./views/Dashboard/Dashboard";
 import {useContext, useEffect} from "react";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
@@ -15,15 +14,16 @@ import Register from "./views/Register/Register";
 import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import {hexToHSL} from "./functions/to-hsl";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 function App() {
-  const { authStore } = useContext(Context);
+  const { authStore, appStore } = useContext(Context);
+  const location = useLocation();
 
   useEffect(() => {
-      const hsl = hexToHSL('#353aab');
-      document.documentElement.style.setProperty('--hue', hsl[0])
-      document.documentElement.style.setProperty('--sat', hsl[1])
-      document.documentElement.style.setProperty('--light', hsl[2])
+
+      appStore.setColor('#3a3535');
+      appStore.updateColor();
 
       if (localStorage.getItem('app_token')) {
           authStore.checkAuth().then(() => {
@@ -48,20 +48,25 @@ function App() {
   })
 
   return (
-      <Routes>
-          <Route element={<AuthGuard redirectTo="/login" auth={authStore.isAuth} />}>
-              <Route path="/" element={<MainLayout />}>
-                  <Route path="/config" element={<Config />} />
-                  <Route path="/" element={<Dashboard />} />
-              </Route>
-          </Route>
-          <Route element={<AuthGuard redirectTo="/" auth={!authStore.isAuth} />}>
-              <Route element={<AuthLayout />} path="/">
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-              </Route>
-          </Route>
-      </Routes>
+      <TransitionGroup component={null}>
+          <CSSTransition key={location.key} classNames="fade" timeout={300}>
+              <Routes location={location}>
+                  <Route element={<AuthGuard redirectTo="/login" auth={authStore.isAuth} />}>
+                      <Route path="/" element={<MainLayout />}>
+                          <Route path="/config" element={<Config />} />
+                          <Route path="/" element={<Dashboard />} />
+                      </Route>
+                  </Route>
+                  <Route element={<AuthGuard redirectTo="/" auth={!authStore.isAuth} />}>
+                      <Route element={<AuthLayout />} path="/">
+                          <Route path="/login" element={<Login />} />
+                          <Route path="/register" element={<Register />} />
+                      </Route>
+                  </Route>
+              </Routes>
+        </CSSTransition>
+      </TransitionGroup>
+
   );
 }
 
