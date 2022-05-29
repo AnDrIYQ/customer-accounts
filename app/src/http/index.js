@@ -1,4 +1,5 @@
 import axios from 'axios';
+import notificationStore from '../store/Notifications/Notifications';
 
 export const API_URL = `http://31.131.24.72:3300`;
 
@@ -14,7 +15,6 @@ export const $refreshApi = axios.create({
 
 $api.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('app_token')}`
-    config.headers.ContentType = `multipart/form-data`;
     return config;
 })
 
@@ -25,6 +25,13 @@ $api.interceptors.response.use(config => {
     try {
         originalRequest = error.config();
     } catch (e) {
+        if (error.response.status === 400) {
+            window.notifications.validationError(error.response.data);
+        }
+        if (error.response.status === 500) {
+            console.log(500)
+            window.notifications.serverError(error.response.data);
+        }
         return null;
     }
     if (error.response.status === 401 && error.config && !error.config._isRetry) {

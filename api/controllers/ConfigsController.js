@@ -28,7 +28,7 @@ class ConfigController {
                 theme_color: req.body.theme_color,
                 notifications: req.body.notifications,
                 currency: req.body.currency,
-                image: req.files[0].filename
+                image: req.files[0]?.filename
             });
             res.status(200).json(response);
         } catch(e) {

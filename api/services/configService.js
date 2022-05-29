@@ -88,7 +88,7 @@ class ConfigService {
             theme_color: newData.theme_color,
             notifications: newData.notifications,
             currency: newData.currency,
-            image: process.env.API_URL + '/public/images/' + newData.image
+            image: process.env.API_URL + '/images/' + newData.image
         })
     }
 }

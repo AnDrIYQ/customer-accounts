@@ -38,7 +38,7 @@ class AuthService {
         const customerDTO = new CustomerDto(newCustomer);
         const configDTO = new ConfigDto(customerConfig);
 
-        const tokens = tokenService.generateTokens({...userDTO, ...customerDTO, ...configDTO})
+        const tokens = tokenService.generateTokens({...userDTO, customer: customerDTO, config: configDTO})
         await tokenService.saveToken(userDTO.id, tokens.refreshToken);
 
         return {
@@ -105,7 +105,7 @@ class AuthService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await UserModel.findById(ObjectId(userData.id));
+        const user = await UserModel.findById(userData.id);
         const userDto = new UserDto(user);
 
         let customerData;

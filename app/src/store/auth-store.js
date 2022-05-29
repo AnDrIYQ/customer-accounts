@@ -9,6 +9,7 @@ export default class AuthStore {
 
     constructor() {
         makeAutoObservable(this);
+        window.GLOBAL_AUTH = this;
     }
 
     // Mutations
@@ -20,24 +21,33 @@ export default class AuthStore {
         this.user = user;
     }
 
+    setConfig(config) {
+        if (this.user.customer) {
+            this.user.customer.config = config;
+        } else {
+            this.user.admin.config = config;
+        }
+    }
+
     // Actions (async)
     async login(email, password) {
         try {
             const response = await AuthService.login(email, password);
             localStorage.setItem('app_token', response.data.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.data.user);
+            this.setUser(response.data.data);
         } catch(e) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async register(email, password) {
+    async register(email, password, username, bio) {
         try {
-            const response = await AuthService.register(email, password);
+            const response = await AuthService.register(email, password, username, bio);
+            console.log(response);
             localStorage.setItem('app_token', response.data.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.data.user);
+            this.setUser(response.data.data);
         } catch(e) {
             console.log(e.response?.data?.message);
         }
@@ -58,13 +68,18 @@ export default class AuthStore {
     }
 
     async checkAuth() {
-        try {
-            const response = await $refreshApi.post('/refresh-token');
-            localStorage.setItem('app_token', response.data.accessToken);
-            this.setAuth(true);
-            this.setUser(response.data.user);
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await $refreshApi.post('/refresh-token');
+                localStorage.setItem('app_token', response.data.accessToken);
+                this.setAuth(true);
+                this.setUser(response.data);
+                resolve(response.data)
+            } catch (e) {
+                window.notifications.serverError(e);
+                localStorage.removeItem('app_token');
+                reject(e.response?.data?.message);
+            }
+        })
     }
 }

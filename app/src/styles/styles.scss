@@ -3,3 +3,9 @@
 @tailwind utilities;
 
 @import "grid";
+// Components
+@import "components/typography";
+@import "components/common";
+@import "components/animations";
+@import "components/sidebar";
+@import "components/collapse";

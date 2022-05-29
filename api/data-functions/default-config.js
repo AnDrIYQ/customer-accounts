@@ -1,5 +1,5 @@
 module.exports = {
-    theme_color: '#388838',
+    theme_color: '#6176ff',
     notifications: true,
     currency: null,
     image: null
