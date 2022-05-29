@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-const Grid = ({children, VA, HA, COL, FULL, HALF, WRAP, GAP, HFULL, HSCREEN ,NOGROW, MG, PD, ...rootDOMAttributes}) => {
+const Grid = ({children, VA, HA, COL, FULL, HALF, WRAP, GAP, HFULL, HSCREEN ,NOGROW, MG, PD, customClasses, ...rootDOMAttributes}) => {
     const getAdditionalClasses = () => {
         let newClasses = [];
         if (COL) newClasses.push('flex-col'); else newClasses.push('flex-row');
@@ -56,7 +56,7 @@ const Grid = ({children, VA, HA, COL, FULL, HALF, WRAP, GAP, HFULL, HSCREEN ,NOG
     ];
 
     return (
-        <div className={classes.join(' ').replaceAll('false', '').replace(/ +(?= )/g,'').trim()}
+        <div className={classes.join(' ').replaceAll('false', '').replace(/ +(?= )/g,'').trim() + ' ' + `${!!customClasses ? customClasses : ''}`}
              {...rootDOMAttributes}
         >
             { children }

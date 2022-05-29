@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Context} from "../../../index";
 
-const Icon = ({ children }) => {
+const Icon = ({ children, color, mini, customClasses, click }) => {
+    const { appStore } = useContext(Context)
+
+    const getColor = () => ({
+        color: `${color !== 'theme' ? color : appStore.themeColor}`
+    })
+
     return (
-        <div className="icon">
+        <div onClick={() => click} className={"icon" + `${mini ? '--mini ' : ' '}` + customClasses} style={getColor()}>
             { children }
         </div>
     );

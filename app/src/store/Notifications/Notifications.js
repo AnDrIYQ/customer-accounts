@@ -1,26 +1,62 @@
 import { makeAutoObservable } from "mobx";
-import notification from "../../components/atomary/floats/Notification";
 
 export default class NotificationsStore {
     // Fields
+    notificationsEnabled = true;
     notifications = [
-        {link: 'Link 1', content: 'Content', icon: 'Icon'},
-        {link: 'Link 2', content: 'Content', icon: 'Icon'},
-        {link: 'Link 3', content: 'Content', icon: 'Icon'},
-        {link: 'Link 4', content: 'Content', icon: 'Icon'}
-    ]
-
+        // {id: Mixed,
+        // link: String,
+        // content: String,
+        // type: One of -> {'error', 'success', 'warning', default: 'info'},
+        // time: Number (seconds)},
+    ];
     constructor() {
         makeAutoObservable(this);
+        this.timer();
     }
-
     // Mutators
-    pushNotification(data) {}
-    deleteNotification(id) {
-        this.notifications = this.notifications.filter(item => item.link !== id);
+    timer() {
+        this.notifications.map((notification) => {
+            if (notification.time) {
+                setTimeout(() => {
+                    this.deleteNotification(notification.id)
+                }, notification.time * 1000)
+            }
+        })
     }
-    // clearNotifications() {}
-
+    setNotifications(status) {
+        this.notificationsEnabled = !!status;
+    }
+    pushNotification(data) {
+        this.notifications.push(data);
+        this.timer();
+    }
+    deleteNotification(id) {
+        this.notifications = this.notifications.filter(item => item.id !== id);
+    }
     // Actions
-    // notify(data) {}
+    message(text) {
+        this.notify({ id: new Date().toString(), content: text, time: 5 });
+    }
+    serverError(data) {
+        this.notify({ id: new Date().toString(), content: data.message, time: 5, type: 'warning' });
+    }
+    validationError(data) {
+        let text = '';
+        if (data?.message) {
+            text = data.message + '. <br/>';
+        }
+        if (!data) {
+            return false;
+        }
+        if (data?.errors?.length) {
+            data.errors.map(error => {
+                text += error.msg.charAt(0).toUpperCase() + error.msg.slice(1) + ': ' + error.param.charAt(0).toUpperCase() + error.param.slice(1) + '<br/>'
+            })
+        }
+        this.notify({ id: new Date().toString(), content: text, time: 5, type: 'error' });
+    }
+    notify(data) {
+        this.pushNotification(data);
+    }
 }

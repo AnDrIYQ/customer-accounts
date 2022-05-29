@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mui/x-data-grid-pro": "*",
+    "@mui/material": "*",
+    "@emotion/react": "*",
+    "@emotion/styled": "*",
     "@heroicons/react": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -33,6 +37,11 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "peerDependencies": {
+    "@mui/material": "^5.2.8",
+    "@mui/system": "^5.2.8",
+    "react": "^17.0.2 || ^18.0.0"
   },
   "browserslist": {
     "production": [

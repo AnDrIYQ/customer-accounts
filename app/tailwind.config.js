@@ -5,11 +5,24 @@ module.exports = {
     },
     extend: {
       maxWidth: {
-        'button': '120px'
+        'button': '120px',
+        '32': '32px'
+      },
+      height: {
+        '32': '32px',
+        '48': '48px'
+      },
+      width: {
+        '32': '32px',
+        '48': '48px'
+      },
+      minHeight: {
+        'card': '100%'
       },
       spacing: {
         '4': '4px',
         '8': '8px',
+        '12': '12px',
         '16': '16px',
         '32': '32px',
       },

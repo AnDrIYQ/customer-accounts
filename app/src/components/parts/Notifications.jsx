@@ -8,15 +8,16 @@ const Notifications = (props) => {
     const { notificationsStore } = useContext(Context);
 
     return (
-        <div className="fixed notifications-block top-0 right-0 flex-col m-32 gap-16">
+        <div className="fixed notifications-block top-0 right-0 flex-col m-16 gap-16 flex items-end w-full max-w-xs">
             <ComponentTransitionList enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit} >
                 {notificationsStore.notifications.map(notification =>
-                    <Presets.TransitionFade key={notification.link}>
-                        <Notification key={notification.link}
+                    <Presets.TransitionFade key={notification.id} className={"w-full"}>
+                        <Notification key={notification?.id}
+                                      id={notification?.id}
+                                      type={notification.type}
                                       link={notification?.link}
                                       content={notification?.content}
                                       icon={notification?.icon}
-                                      onClick={() => notificationsStore.deleteNotification(notification.link)}
                         />
                     </Presets.TransitionFade>)
                 }

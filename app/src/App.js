@@ -13,39 +13,21 @@ import AuthLayout from "./layouts/AuthLayout";
 import Register from "./views/Register/Register";
 import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
-import {hexToHSL} from "./functions/to-hsl";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+import NotFound from "./views/NotFound/NotFound";
 
 function App() {
-  const { authStore, appStore } = useContext(Context);
+  const { authStore, appStore, notificationsStore } = useContext(Context);
   const location = useLocation();
 
   useEffect(() => {
-
-      appStore.setColor('#3a3535');
-      appStore.updateColor();
-
+      window.notifications = notificationsStore;
       if (localStorage.getItem('app_token')) {
           authStore.checkAuth().then(() => {
-              // Socket connect
-              const SOCKET_URL = `http://31.131.24.72:3330`;
-              const io = require('socket.io-client');
-              // Global event bus
-              const customer = JSON.parse(atob(localStorage.getItem('app_token')?.split('.')[1])).customer
-              const chanel = customer?.id
-              if (window.EVENT_BUS) {
-                  return false;
-              }
-              window.EVENT_BUS = io.connect(SOCKET_URL, {
-                  query: { roomName: chanel || false }
-              });
-              window.EVENT_BUS.on('connect', () => {
-                  // Subscript on This account events
-                  console.log('Connected to Event Bus... ');
-              });
-          });
+              appStore.updateColor(authStore?.user?.config?.theme_color);
+          })
       }
-  })
+  }, [])
 
   return (
       <TransitionGroup component={null}>
@@ -63,10 +45,12 @@ function App() {
                           <Route path="/register" element={<Register />} />
                       </Route>
                   </Route>
+                  <Route path="*" element={<AuthLayout />}>
+                      <Route path="*" element={<NotFound />} />
+                  </Route>
               </Routes>
         </CSSTransition>
       </TransitionGroup>
-
   );
 }
 

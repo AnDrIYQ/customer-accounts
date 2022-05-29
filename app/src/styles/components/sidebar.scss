@@ -1,0 +1,34 @@
+@media (max-width: 768px) {
+  aside[aria-label="Sidebar"] {
+    position: absolute;
+    z-index: 200;
+    top: 68px;
+    transition: transform .3s;
+    transform: translateX(-100%);
+  }
+  .sidebar-opened > aside[aria-label="Sidebar"] {
+    transform: translateX(0);
+    transition: transform .3s;
+  }
+  .burger {
+    display: flex !important;
+  }
+}
+
+.burger {
+  display: none;
+}
+
+aside[aria-label="Sidebar"] {
+  transition: transform .3s;
+  & > div {
+    align-items: flex-start !important;
+  }
+  div, ul {
+    width: 100%;
+  }
+  svg {
+    --h: var(--hue);
+    color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+  }
+}

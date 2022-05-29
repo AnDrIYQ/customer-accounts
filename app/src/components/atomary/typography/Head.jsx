@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Head = ({ children, ...rootDOMAttributes}) => {
+const Head = ({ children, customClasses, ...rootDOMAttributes}) => {
     return (
-        <h1 {...rootDOMAttributes} className="head">{ children }</h1>
+        <h1 {...rootDOMAttributes} className={"head " + customClasses} >{ children }</h1>
     )
 };
 

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card} from "flowbite-react";
 import {Context} from "../../index";
 import Grid from "../../components/atomary/containers/Grid";
@@ -16,7 +16,11 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const {authStore} = useContext(Context);
+    const {authStore, appStore} = useContext(Context);
+
+    useEffect(() => {
+        appStore.finishLoading();
+    }, [])
 
     return (
         <Card className="max-w-sm cursor-pointer card">

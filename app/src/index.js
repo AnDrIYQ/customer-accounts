@@ -10,10 +10,12 @@ import 'flowbite';
 import AuthStore from "./store/auth-store";
 import AppStore from "./store/App/App";
 import NotificationsStore from "./store/Notifications/Notifications";
+import BillingStore from "./store/Billing/Billing";
 
 // Store instances
 const authStore = new AuthStore();
 const appStore = new AppStore();
+const billingStore = new BillingStore();
 const notificationsStore = new NotificationsStore();
 
 // Stores merge in context
@@ -21,6 +23,7 @@ const storeList = {
     notificationsStore,
     authStore,
     appStore,
+    billingStore
 };
 export const Context = createContext({
    ...storeList

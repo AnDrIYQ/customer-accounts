@@ -9,12 +9,25 @@ import Panel from "../components/atomary/viewers/Panel";
 import {UserIcon} from "@heroicons/react/outline";
 import Icon from "../components/atomary/typography/Icon";
 import {Context} from "../index";
+import Notifications from "../components/parts/Notifications";
+
+const THEME_COLOR = '#6176ff';
 
 const AuthLayout = () => {
-    const { authStore, appStore } = useContext(Context)
+    const { appStore, notificationsStore, authStore } = useContext(Context);
+
+    useEffect(() => {
+        notificationsStore.setNotifications(true);
+        appStore.updateColor(THEME_COLOR);
+        if (authStore.isAuth) {
+            appStore.updateColor(authStore.user.config.theme_color);
+        }
+        appStore.finishLoading();
+    }, [])
 
     return (
-        <div onClick={() => appStore.finishLoading()} className={"login-layout h-screen items-start " + `${appStore.isLoading ? 'loading' : 'loading finished'}`}>
+        <div className={"login-layout h-screen items-start"}>
+            <Notifications />
             <Grid GAP FULL COL NOGROW>
                 <Panel>
                     <Grid VA="center" WRAP="no" GAP="gap-16">
