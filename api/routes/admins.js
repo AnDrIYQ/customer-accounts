@@ -14,6 +14,7 @@ const Router = require('express').Router
 const router = new Router();
 
 // Actions
+router.get('/admins', authMiddleware, AdminController.get);
 router.put('/admins/update',
     body('username').isLength({min: 4, max: 32}),
     body('bio').optional().isLength({min: 4, max: 32}),

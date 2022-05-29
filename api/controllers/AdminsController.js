@@ -7,6 +7,18 @@ const {base64decode} = require("nodejs-base64");
 const getAccountInfo = require('../data-functions/account-info')
 
 class AdminController {
+    async get(req, res, next) {
+        try {
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+            }
+            const response = await adminService.get();
+            res.status(200).json(response);
+        } catch(e) {
+            next(e);
+        }
+    }
     async update(req, res, next) {
         try {
             const validationErrors = validationResult(req);

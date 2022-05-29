@@ -1,3 +1,9 @@
+.MuiDataGrid-root {
+  .MuiDataGrid-main {
+    width: 100%;
+  }
+}
+
 body {
   -webkit-tap-highlight-color: transparent;
 
@@ -194,6 +200,7 @@ button:focus {
 
 .tabs {
   .tab {
+    flex-direction: column;
     padding: 16px;
     min-height: 70vh;
     display: flex;
@@ -204,13 +211,24 @@ button:focus {
     width: 100%;
     padding-left: 1%;
     padding-right: 1%;
+    & > button {
+      &:hover, &:focus {
+        --switch: calc((var(--light) - var(--threshold)) * -100%);
+        color: hsl(0, 0%, var(--switch));
+      }
+      color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+    }
   }
   button {
     padding-top: 10px;
     padding-bottom: 10px;
     flex-grow: 1;
     --h: var(--hue);
-    color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+    --switch: calc((var(--light) - var(--threshold)) * -100%);
+    color: hsl(0, 0%, var(--switch));
+    &[data-testid="accordion-title-element"] {
+      color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+    }
     &.active {
       border-color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
     }
@@ -218,5 +236,50 @@ button:focus {
       --switch: calc((var(--light) - var(--threshold)) * -100%);
       color: hsl(0, 0%, var(--switch));
     }
+  }
+}
+
+select {
+  max-width: 200px;
+  min-width: 200px;
+  &:focus, &:active {
+    --h: var(--hue);
+    --switch: calc((var(--light) - var(--threshold)) * -100%);
+    outline-width: 1px !important;
+    --lighter: calc(var(--light) + 16);
+    outline-color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--lighter) * 1%)) !important;
+    outline-offset: 0 !important;
+    border-color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--lighter) * 1%)) !important;
+  }
+}
+
+.select-container {
+  width: 100%;
+  & > div {
+    flex-grow: 0;
+  }
+}
+
+input[type="file"] {
+  border: none !important;
+  --h: var(--hue);
+  background: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+  --switch: calc((var(--light) - var(--threshold)) * -100%);
+  color: hsl(0, 0%, var(--switch));
+  cursor: pointer;
+}
+
+input::file-selector-button {
+  display: none;
+}
+
+.MuiSwitch-root {
+  .MuiSwitch-colorSecondary.Mui-checked {
+    --h: var(--hue);
+    color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+  }
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+    --h: var(--hue);
+    background-color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
   }
 }

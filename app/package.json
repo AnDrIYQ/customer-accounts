@@ -5,6 +5,7 @@
   "dependencies": {
     "@mui/x-data-grid-pro": "*",
     "@mui/material": "*",
+    "@material-ui/core": "*",
     "@emotion/react": "*",
     "@emotion/styled": "*",
     "@heroicons/react": "^1.0.6",

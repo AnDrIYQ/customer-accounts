@@ -51,7 +51,7 @@ const Grid = ({children, VA, HA, COL, FULL, HALF, WRAP, GAP, HFULL, HSCREEN ,NOG
         HA === 'around' && 'justify-around',
         HA === 'center' && 'justify-center',
         HA === 'start' && 'justify-start',
-        HA === 'end' && 'justify-end',
+        HA === 'end' && '!justify-end',
         ...getAdditionalClasses()
     ];
 

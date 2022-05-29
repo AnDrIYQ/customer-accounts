@@ -13,7 +13,7 @@ import Card from "../components/atomary/viewers/Card";
 import Grid from "../components/atomary/containers/Grid";
 
 const MainLayout = () => {
-    const { authStore, appStore, notificationsStore } = useContext(Context);
+    const { authStore, appStore, notificationsStore, billingStore } = useContext(Context);
 
     useEffect(() => {
         if (localStorage.getItem('app_token')) {
@@ -35,7 +35,7 @@ const MainLayout = () => {
                     console.log('Connected to Event Bus... ');
                 });
                 // Messages init
-                eventHandlers.apply(this, [window.EVENT_BUS, notificationsStore]);
+                eventHandlers.apply(this, [window.EVENT_BUS, notificationsStore, billingStore, authStore]);
                 notificationsStore.setNotifications(authStore?.user?.config?.notifications)
                 if (authStore.user.admin) {
                     notificationsStore.message(`Welcome, ${authStore?.user?.admin?.username}`);

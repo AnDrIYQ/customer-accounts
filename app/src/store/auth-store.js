@@ -9,6 +9,7 @@ export default class AuthStore {
 
     constructor() {
         makeAutoObservable(this);
+        window.GLOBAL_AUTH = this;
     }
 
     // Mutations
@@ -18,6 +19,14 @@ export default class AuthStore {
 
     setUser(user) {
         this.user = user;
+    }
+
+    setConfig(config) {
+        if (this.user.customer) {
+            this.user.customer.config = config;
+        } else {
+            this.user.admin.config = config;
+        }
     }
 
     // Actions (async)

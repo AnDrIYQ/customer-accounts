@@ -1,0 +1,8 @@
+.collapse {
+  & > div {
+    justify-content: center;
+    label {
+      flex-grow: 0;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import {hexToHSL} from "../../functions/to-hsl";
 import {Color} from "../../classes/color";
+import CurrencyService from "../../services/CurrencyService";
 
 export default class AppStore {
     constructor() {
@@ -9,6 +10,7 @@ export default class AppStore {
     // Fields
     themeColor = "#6176ff"
     isLoading = true;
+    currencies = [];
     routeLoading = true;
     sideBarOpened = true;
     currentPage = '/'
@@ -25,7 +27,18 @@ export default class AppStore {
     setRouteLoading(loading) {
         this.routeLoading = loading;
     }
+    setConfig(config) {
+        this.themeColor = config.theme_color;
+        window.GLOBAL_AUTH.setConfig(config);
+    }
+    setCurrencies(list) {
+        this.currencies = list;
+    }
     // Actions
+    async fetchConfig() {
+        const currencies = await CurrencyService.get();
+        this.setCurrencies(currencies.data.data);
+    }
     openSideBar() {
         this.setSideBarOpened(true);
     }

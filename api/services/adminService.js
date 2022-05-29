@@ -4,6 +4,9 @@ const AdminDto = require('../dtos/admin-dto');
 const ApiError = require('../exceptions/api-error')
 
 class AdminService {
+    async get() {
+        return AdminModel.find({});
+    }
     async updateAdmin (name, bio, accountInfo) {
         const user = await UserModel.findOne({email: accountInfo.email});
         if (!user) {

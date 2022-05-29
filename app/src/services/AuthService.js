@@ -10,4 +10,7 @@ export default class AuthService {
     static logout(email, password) {
         return $api.post('/logout');
     }
+    static getAdmins() {
+        return $api.get(`/admins`);
+    }
 }

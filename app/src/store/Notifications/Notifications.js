@@ -36,7 +36,7 @@ export default class NotificationsStore {
     }
     // Actions
     message(text) {
-        this.notify({ id: new Date().toString(), content: text, time: 5 });
+        this.notify({ id: new Date(), content: text, time: 5 });
     }
     serverError(data) {
         this.notify({ id: new Date().toString(), content: data.message, time: 5, type: 'warning' });
