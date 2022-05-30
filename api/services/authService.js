@@ -178,6 +178,7 @@ class AuthService {
     }
     async remove(email) {
         const account = await UserModel.findOne({email});
+        account.remove();
         await TokenModel.remove({user: account._id});
         return true;
     }

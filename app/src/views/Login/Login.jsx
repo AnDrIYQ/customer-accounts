@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import {UserIcon} from "@heroicons/react/outline";
 import Icon from "../../components/atomary/typography/Icon";
 import {UserCircleIcon} from "@heroicons/react/solid";
+import {observer} from "mobx-react-lite";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -43,4 +44,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default observer(Login);

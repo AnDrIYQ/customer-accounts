@@ -4,6 +4,11 @@
   }
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .3s !important;
+}
+
 body {
   -webkit-tap-highlight-color: transparent;
 

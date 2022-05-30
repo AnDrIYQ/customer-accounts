@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Textarea from "../../components/atomary/inputs/Textarea";
 import {UserAddIcon} from "@heroicons/react/solid";
 import Icon from "../../components/atomary/typography/Icon";
+import {observer} from "mobx-react-lite";
 
 
 const Register = () => {
@@ -44,4 +45,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default observer(Register);

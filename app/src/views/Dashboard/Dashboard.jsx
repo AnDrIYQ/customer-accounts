@@ -77,6 +77,7 @@ function Dashboard() {
                         </Grid>
                         <Grid FULL GAP={"gap-8"} NOGROW customClasses={"my-16"}>
                             <Head>Last customers</Head>
+                            {!billingStore.customers.length && <span>There are no customers for service</span>}
                             {billingStore.customers && billingStore.customers.slice(0, 5).map(customer => <Panel rounded key={customer.id}>
                                 <span>ID: {customer._id}</span>
                                 Name: {customer.username} <Icon><ChevronDoubleRightIcon /></Icon>
@@ -124,7 +125,8 @@ function Dashboard() {
                         </Grid>
                         <Head customClasses={"mt-8"}>Last messages</Head>
                         <Grid FULL GAP={"gap-8"} NOGROW customClasses={"my-16"}>
-                            <ComponentTransitionList enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
+                            {!billingStore.messages.length && <span>No messages</span>}
+                            <ComponentTransitionList key={new Date()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
                                 {billingStore.messages && billingStore.messages.slice(0).reverse().slice(0, 5).map(message =>
                                     <Presets.TransitionFade key={message.message}>
                                         <Panel key={message.message} rounded>

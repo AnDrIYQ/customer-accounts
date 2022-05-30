@@ -38,6 +38,12 @@ export default class NotificationsStore {
     message(text) {
         this.notify({ id: new Date(), content: text, time: 5 });
     }
+    success(text) {
+        this.notify({ id: new Date(), content: text, time: 5, type: 'success' });
+    }
+    warning(text) {
+        this.notify({ id: new Date(), content: text, time: 5, type: 'warning' });
+    }
     serverError(data) {
         this.notify({ id: new Date().toString(), content: data.message, time: 5, type: 'warning' });
     }

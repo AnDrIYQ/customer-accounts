@@ -6,7 +6,7 @@ const Textarea = ({ id, label, setValue, value, placeholder, required }) => {
             <label htmlFor={id} className="flex items-center grow">{ label }</label>
             <textarea onChange={e => setValue(e.target.value)} value={value} id={id}
                    className="p-8 border border-gray-300 text-gray-900 text-sm rounded-lg"
-                   placeholder={placeholder} required={required ? 'required' : ''} />
+                   placeholder={placeholder} />
         </div>
     );
 };
