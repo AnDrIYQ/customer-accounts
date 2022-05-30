@@ -72,6 +72,12 @@ const Config = () => {
     };
 
     const accountHandler = () => {
+        let action = "";
+        if (authStore?.user?.admin?.username) {
+            action = "updateAdmin"
+        } else {
+            action = "updateUser"
+        }
         let data = { username };
         if (bio) {
             data["bio"] = bio;
@@ -81,13 +87,13 @@ const Config = () => {
         }
 
         appStore.loadRoute();
-        FormService.updateUser(data).then(response => {
+        FormService[action].apply(this, [data]).then(response => {
             if (response.status === 200) {
                 notificationsStore.success("Account changed");
-                setTimeout(() => {
-                    appStore.makeRouteLoaded();
-                }, 700);
             }
+            setTimeout(() => {
+                appStore.makeRouteLoaded();
+            }, 700);
         })
     }
 
@@ -119,8 +125,10 @@ const Config = () => {
                                 <Collapse opened title={"System"}>
                                     <File id={"image"} label={"Change Image"} innerRef={fileField} setValue={() => {}} />
                                     <Input right type={"color"} value={themeColor} label={"Theme color"} setValue={setThemeColor} />
-                                    <SelectField id={"currency"} label={"Select currency"} init={currencyId} setValue={setCurrencyId} variants={Array.from(currenciesVariants)}  />
-                                    <Checkbox label={"Show notifications?"} checked={!!showNotifications} setValue={setShowNotifications} />
+                                    {authStore?.user?.customer &&
+                                    <SelectField id={"currency"} label={"Select currency"} init={currencyId} setValue={setCurrencyId} variants={Array.from(currenciesVariants)}  />}
+                                    {authStore?.user?.customer &&
+                                        <Checkbox label={"Show notifications?"} checked={!!showNotifications} setValue={setShowNotifications} />}
                                     <Grid FULL HA={"end"}>
                                         <Button action={configHandler} right>Save</Button>
                                     </Grid>
@@ -131,13 +139,14 @@ const Config = () => {
                                     <Input right type={"email"} value={email} label={"Account email"} disabled />
                                     <Input right type={"text"} value={username} placeholder={"Your name"} label={"Change Name"} setValue={setUsername} />
                                     <Textarea right type={"text"} value={bio} placeholder={"About you"} label={"Change Biography"} setValue={setBio} />
-                                    <Input right type={"password"} value={password} placeholder={"Change if you want"} setValue={setPassword} label={"Change password"} />
+                                    {authStore?.user?.customer &&
+                                        <Input right type={"password"} value={password} placeholder={"Change if you want"} setValue={setPassword} label={"Change password"} />}
                                     <Grid FULL HA={"end"}>
                                         <Button action={accountHandler} right>Save</Button>
                                     </Grid>
                                 </Collapse>
                             </Grid>
-                            <Grid FULL VA={"start"} HA={"center"} NOGROW>
+                            {authStore?.user?.customer && <Grid FULL VA={"start"} HA={"center"} NOGROW>
                                 <Collapse title={"Danger!"}>
                                     <Grid FULL HA={"start"} GAP>
                                         <Input disabled type={"text"} value={accountId} label={"Account id"} />
@@ -150,7 +159,7 @@ const Config = () => {
                                         }
                                     </Grid>
                                 </Collapse>
-                            </Grid>
+                            </Grid>}
                         </Grid>
                     </Tabs.Item>
                 </Tabs.Group>
