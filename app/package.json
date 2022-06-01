@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@themesberg/tailwind-datepicker": "*",
     "@mui/x-data-grid-pro": "*",
     "@mui/material": "*",
     "@material-ui/core": "*",

@@ -38,6 +38,9 @@ export default class NotificationsStore {
     message(text) {
         this.notify({ id: new Date(), content: text, time: 5 });
     }
+    adminMessage(text) {
+        this.notify({ id: new Date(), content: text, time: 5, link: '/messages' });
+    }
     success(text) {
         this.notify({ id: new Date(), content: text, time: 5, type: 'success' });
     }
@@ -45,7 +48,10 @@ export default class NotificationsStore {
         this.notify({ id: new Date(), content: text, time: 5, type: 'warning' });
     }
     serverError(data) {
-        this.notify({ id: new Date().toString(), content: data.message, time: 5, type: 'warning' });
+        this.notify({ id: new Date(), content: data.message, time: 5, type: 'warning' });
+    }
+    error(text) {
+        this.notify({ id: new Date(), content: text, time: 5, type: 'error' });
     }
     validationError(data) {
         let text = '';

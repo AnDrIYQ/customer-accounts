@@ -9,7 +9,7 @@ const Icon = ({ children, color, mini, customClasses, click }) => {
     })
 
     return (
-        <div onClick={() => click} className={"icon" + `${mini ? '--mini ' : ' '}` + customClasses} style={getColor()}>
+        <div onClick={click} className={"icon" + `${mini ? '--mini ' : ' '}` + customClasses} style={getColor()}>
             { children }
         </div>
     );

@@ -15,6 +15,10 @@ import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import NotFound from "./views/NotFound/NotFound";
+import Messages from "./views/Messages/Messages";
+import Customers from "./views/Customers/Customers";
+import Tariff from "./views/Tariffs/Tariff";
+import Currency from "./views/Currency/Currency";
 
 function App() {
   const { authStore, appStore, notificationsStore } = useContext(Context);
@@ -36,6 +40,10 @@ function App() {
                   <Route element={<AuthGuard redirectTo="/login" auth={authStore.isAuth} />}>
                       <Route path="/" element={<MainLayout />}>
                           <Route path="/config" element={<Config />} />
+                          <Route path="/messages" element={<Messages />} />
+                          <Route path="/customers" element={<Customers />} />
+                          <Route path="/currencies" element={<Currency />} />
+                          <Route path="/tariffs" element={<Tariff />} />
                           <Route path="/" element={<Dashboard />} />
                       </Route>
                   </Route>

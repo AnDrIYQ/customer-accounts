@@ -1,5 +1,4 @@
 import axios from 'axios';
-import notificationStore from '../store/Notifications/Notifications';
 
 export const API_URL = `http://31.131.24.72:3300`;
 

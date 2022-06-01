@@ -7,7 +7,6 @@ import Text from "../../components/atomary/typography/Text";
 import Input from "../../components/atomary/inputs/Input";
 import Button from "../../components/atomary/typography/Button";
 import { useNavigate } from "react-router-dom";
-import {UserIcon} from "@heroicons/react/outline";
 import Icon from "../../components/atomary/typography/Icon";
 import {UserCircleIcon} from "@heroicons/react/solid";
 import {observer} from "mobx-react-lite";

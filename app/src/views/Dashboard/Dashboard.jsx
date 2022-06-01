@@ -12,10 +12,12 @@ import Text from "../../components/atomary/typography/Text";
 import Icon from "../../components/atomary/typography/Icon";
 import Panel from "../../components/atomary/viewers/Panel";
 import {AnimationTypes, ComponentTransitionList, Presets} from "react-component-transition";
+import {useNavigate} from "react-router-dom";
 
 function Dashboard() {
     const {authStore, appStore, billingStore} = useContext(Context);
     const [currency, setCurrency] = useState('$');
+    const navigate = useNavigate();
 
     useEffect(() => {
         appStore.loadRoute();
@@ -24,7 +26,9 @@ function Dashboard() {
                 billingStore.getCustomers(0, ''),
                 billingStore.getTariffs(0, ''),
             ]).then(() => {
-                appStore.makeRouteLoaded();
+                setTimeout(() => {
+                    appStore.makeRouteLoaded();
+                }, 400);
             });
         } else {
             Promise.all([
@@ -39,7 +43,9 @@ function Dashboard() {
                         setCurrency(item.symbol || item.name || '$');
                     }
                 })
-                appStore.makeRouteLoaded();
+                setTimeout(() => {
+                    appStore.makeRouteLoaded();
+                }, 400);
             });
         }
     }, [])
@@ -86,7 +92,7 @@ function Dashboard() {
                     </Tabs.Item>
                 </Tabs.Group>}
             </Preloaded>
-            <Preloaded>
+            <Preloaded loading={appStore.routeLoading}>
                 {authStore?.user?.customer && <Tabs.Group
                     aria-label="Tabs with icons"
                     style="underline"
@@ -132,7 +138,7 @@ function Dashboard() {
                                         <Panel key={message.message} rounded>
                                             <span>{new Date(message.date).toDateString()}</span>
                                             <span>From: {message.from}</span>
-                                            Message: {message.message.substring(0, 10) + '...'} <Icon><ChevronDoubleRightIcon /></Icon>
+                                            Message: {message.message.substring(0, 10) + '...'} <Icon click={() => navigate('/messages')}><ChevronDoubleRightIcon /></Icon>
                                         </Panel>
                                     </Presets.TransitionFade>
                                 )}

@@ -56,7 +56,7 @@ const MainLayout = () => {
             <Header />
             <Grid FULL WRAP="no" NOGROW VA={"start"}>
                 <Sidebar />
-                <Grid COL VA="start" customClasses={"my-32 max-w-4xl ml-0 md:mx-16"} GAP={"gap-16"}>
+                <Grid COL VA="start" customClasses={"my-32 max-w-4xl ml-0 md:mx-16"} MG GAP={"gap-16"}>
                     <BreadCrumbs />
                     <Card hfull wfull customClasses={"route-card"}>
                         <Outlet />

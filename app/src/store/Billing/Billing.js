@@ -64,9 +64,10 @@ export default class BillingStore {
         MessageService.customerGet(id).then(response => {
             const messages = [];
             response.data.map((message, index) => {
-                const author = this.admins.filter(admin => admin._id == message.from);
+                const author = this.admins.filter(admin => admin.id == message.from);
                 messages[index] = message;
                 messages[index]['from'] = Array.from(author)[0]?.username;
+                messages[index]['from_image'] = Array.from(author)[0]?.image;
             })
             this.setMessages(messages);
         })

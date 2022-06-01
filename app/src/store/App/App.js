@@ -59,6 +59,14 @@ export default class AppStore {
         document.querySelector('#root').classList.remove('finished');
         this.setLoading(true);
     }
+    fetchCurrencies() {
+        return new Promise((resolve) => {
+            CurrencyService.get(0, null).then((response) => {
+                this.setCurrencies(response.data.data)
+                resolve(!!response.data.data.length);
+            })
+        })
+    }
     updateColor(color) {
         this.setColor(color);
         const hsl = hexToHSL(new Color(this.themeColor).value);

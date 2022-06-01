@@ -115,6 +115,32 @@ input:focus, textarea:focus {
   outline-offset: 0 !important;
 }
 
+.datepicker-cell:hover, .datepicker-cell:focus, .datepicker-cell:active, .datepicker-cell.selected {
+  --h: var(--hue);
+  background: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%)) !important;
+  --switch: calc((var(--light) - var(--threshold)) * -100%);
+  color: hsl(0, 0%, var(--switch)) !important;
+}
+
+.datepicker-controls {
+  & > button:hover, & > button:focus, & > button:active {
+    background: transparent !important;
+  }
+  & > button:first-child, & > button:last-child {
+    --h: var(--hue);
+    background: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%)) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 16px;
+      height: 16px;
+      --switch: calc((var(--light) - var(--threshold)) * -100%);
+      color: hsl(0, 0%, var(--switch)) !important;
+    }
+  }
+}
+
 button:hover, button:active {
   --h: var(--hue);
   --lighter: calc(var(--light) + 16);
@@ -194,7 +220,13 @@ button:focus {
   color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
 }
 .route-card {
+  &::-webkit-scrollbar {
+    display: none;
+  }
   min-height: 70vh;
+  max-height: 75vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

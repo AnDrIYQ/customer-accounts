@@ -12,6 +12,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import {CurrencyDollarIcon} from "@heroicons/react/outline";
 
 const SideBar = () => {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ const SideBar = () => {
                 {title: 'Dashboard', to: '/', icon: HomeIcon, label: 'Home'},
                 {title: 'Customers', to: '/customers', icon: UserGroupIcon},
                 {title: 'Tariffs', to: '/tariffs', icon: TableIcon },
+                {title: 'Currencies', to: '/currencies', icon: CurrencyDollarIcon },
                 {title: 'Config', to: '/config', icon: AdjustmentsIcon },
                 {title: 'Logout', to: '/logout', icon: LogoutIcon }
             ])
