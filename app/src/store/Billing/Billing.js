@@ -90,24 +90,24 @@ export default class BillingStore {
     }
     async getCustomerServices (from, limit) {
         ServiceService.get(from, limit).then(response => {
-            this.setServices(response.data.data);
+            this.setServices(response?.data?.data || []);
         })
     }
     async getServices (from, limit) {
         ServiceService.get(from, limit).then(response => {
-            this.setServices(response.data.data);
+            this.setServices(response?.data?.data || []);
         })
     }
     async getCustomers (from, limit) {
         let result = [];
         const response = await CustomerService.get(from, limit);
-        this.setCustomers(response.data.data.users);
+        this.setCustomers(response?.data?.data?.users);
         result = response.data.data.users;
         return result;
     }
     async getTariffs (from, limit) {
         TariffService.get(from, limit).then(response => {
-            this.setTariffs(response.data.data);
+            this.setTariffs(response?.data?.data || []);
         })
     }
 }
