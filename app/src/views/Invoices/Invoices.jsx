@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import Panel from "../../components/atomary/viewers/Panel";
 import Text from "../../components/atomary/typography/Text";
@@ -18,6 +18,8 @@ import {EyeIcon} from "@heroicons/react/outline";
 import InvoiceService from "../../services/InvoiceService";
 
 const Invoices = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [invoices, setInvoices] = useState([]);
     const {authStore, appStore, billingStore, notificationsStore} = useContext(Context);
 
@@ -28,6 +30,7 @@ const Invoices = () => {
                 setTimeout(() => {
                     billingStore.getCustomerInvoices(0, null).then(() => {
                         appStore.makeRouteLoaded();
+                        navigate(location.pathname);
                     })
                 }, 500);
             })

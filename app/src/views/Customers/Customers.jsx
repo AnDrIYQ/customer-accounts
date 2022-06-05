@@ -4,7 +4,7 @@ import {Tabs, Toast} from "flowbite-react";
 import Grid from "../../components/atomary/containers/Grid";
 import {Context} from "../../index";
 import {EyeIcon, EyeOffIcon, UsersIcon} from "@heroicons/react/outline";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import empty from "../../functions/empty";
 import Panel from "../../components/atomary/viewers/Panel";
 import Text from "../../components/atomary/typography/Text";
@@ -27,6 +27,7 @@ import Card from "../../components/atomary/viewers/Card";
 const Customers = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const {authStore, appStore, billingStore, notificationsStore} = useContext(Context);
 
     const switchTab = (name) => {
@@ -74,15 +75,17 @@ const Customers = () => {
         const response = await InvoiceService.charge(invoiceDescription, currentCustomer._id);
         if (response) {
             notificationsStore.success("Charged new Invoice");
-            appStore.loadRoute();
+            navigate(location.pathname);
         }
     };
     const makePaid = (id, paid, was_read) => {
         if (!paid && was_read) {
+            appStore.loadRoute();
             InvoiceService.pay(id).then(r => {
                 setTimeout(() => {
                     appStore.loadRoute();
                     InvoiceService.fetch().then(r => appStore.makeRouteLoaded());
+                    navigate(location.pathname);
                 }, 500)
             })
         }

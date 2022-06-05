@@ -1,13 +1,15 @@
 const ImageModel = require('../models/image-model');
 const ServiceModel = require('../models/service-model');
+const CustomerModel = require('../models/customer-model')
 const InvoiceModel = require('../models/invoice-model');
 const ApiError = require('../exceptions/api-error')
 const messageService = require('../services/messageService');
 
 const serviceService = require('../services/serviceService')
 
-// Message Notification text
+// Messages Notifications texts
 const MESSAGE_NOTIFICATION = (number) => `Your services has been charged with an invoice with a number ${number}`;
+const PAID_NOTIFICATION = (number) => `Invoice with a number ${number} was paid`;
 
 class InvoiceService {
     async all (from = 0, limit = null) {
@@ -43,7 +45,7 @@ class InvoiceService {
             data: saved
         }
     }
-    async makePaid(id) {
+    async makePaid(id, account) {
         const isMade = await InvoiceModel.findByIdAndUpdate(id, {paid: true});
         return {
             status: !!isMade

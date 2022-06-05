@@ -59,7 +59,7 @@ class InvoiceController {
             if (!validationErrors.isEmpty()) {
                 return next(ApiError.BadRequest('Validation error', validationErrors.array()))
             }
-            const response = await invoiceService.makePaid(req.params.id);
+            const response = await invoiceService.makePaid(req.params.id, getAccount(req));
             res.status(200).json(response)
         } catch(e) {
             next(e);
