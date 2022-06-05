@@ -48,6 +48,15 @@ export default class BillingStore {
     customersCount() {
         return Number(this?.customers?.length) || 0;
     }
+    invoicesUnpaid() {
+        let total = 0;
+        this?.invoices.map(item => {
+            if (!item.paid) {
+                total += item.price;
+            }
+        });
+        return total;
+    }
 
     // Actions (async)
     async getCustomerInvoices (from, limit) {
@@ -61,15 +70,27 @@ export default class BillingStore {
         })
     }
     async getMessages (id) {
-        MessageService.customerGet(id).then(response => {
-            const messages = [];
-            response.data.map((message, index) => {
-                const author = this.admins.filter(admin => admin.id == message.from);
-                messages[index] = message;
-                messages[index]['from'] = Array.from(author)[0]?.username;
-                messages[index]['from_image'] = Array.from(author)[0]?.image;
-            })
-            this.setMessages(messages);
+        if (!id) {
+            return false;
+        }
+        const response = await MessageService.customerGet(id);
+        const messages = [];
+        response?.data?.map((message, index) => {
+            const author = this.admins.filter(admin => admin.id == message.from);
+            messages[index] = message;
+            messages[index]['from'] = Array.from(author)[0]?.username;
+            messages[index]['from_image'] = Array.from(author)[0]?.image;
+        })
+        this.setMessages(messages);
+        return messages;
+    }
+    async getInvoices() {
+        const response = await InvoiceService.fetch();
+        return response?.data || [];
+    }
+    async getCustomerServices (from, limit) {
+        ServiceService.get(from, limit).then(response => {
+            this.setServices(response.data.data);
         })
     }
     async getServices (from, limit) {
@@ -78,9 +99,11 @@ export default class BillingStore {
         })
     }
     async getCustomers (from, limit) {
-        CustomerService.get(from, limit).then(response => {
-            this.setCustomers(response.data.data.users);
-        })
+        let result = [];
+        const response = await CustomerService.get(from, limit);
+        this.setCustomers(response.data.data.users);
+        result = response.data.data.users;
+        return result;
     }
     async getTariffs (from, limit) {
         TariffService.get(from, limit).then(response => {

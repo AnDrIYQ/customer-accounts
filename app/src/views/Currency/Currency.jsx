@@ -12,6 +12,7 @@ import CurrencyService from "../../services/CurrencyService";
 import {AnimationTypes, ComponentTransitionList, Presets} from "react-component-transition";
 import Head from "../../components/atomary/typography/Head";
 import Icon from "../../components/atomary/typography/Icon";
+import {v4} from "uuid";
 import {Toast} from "flowbite-react";
 
 const Currency = () => {
@@ -108,7 +109,7 @@ const Currency = () => {
                         >
                             <Grid GAP={"gap-8"} NOGROW COL VA={"start"} FULL>
                                 <Head>Currencies list:</Head>
-                                <ComponentTransitionList key={new Date()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
+                                <ComponentTransitionList key={v4()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
                                     {!!appStore.currencies.length && appStore.currencies.slice(0).reverse().map((currency, index) => {
                                             return <Presets.TransitionSlideUp key={currency._id} className={"w-full"}>
                                                 <Toast key={currency._id} className="space-x-4 p-16 pr-8 mr-0 flex-nowrap max-w-md divide-x divide-gray-200 dark:divide-gray-700">

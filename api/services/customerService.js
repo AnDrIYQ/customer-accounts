@@ -17,8 +17,11 @@ class CustomerService {
         customers.map((r) => users.push(r.toObject()));
         await Promise.all(users.map(async (user) => {
             const account = await UserModel.findOne({customer_status: ObjectId(user._id)})
+            const config = await ConfigModel.findOne({_id: ObjectId(user.config)})
             user.email = account.email;
             user.password = account.password;
+            user.image = config.image;
+            user.color = config.theme_color;
         }));
         return {users}
     }

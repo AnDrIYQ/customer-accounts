@@ -22,7 +22,7 @@ $api.interceptors.response.use(config => {
 },  async (error) => {
     let originalRequest;
     try {
-        originalRequest = error.config();
+        originalRequest = error?.config();
     } catch (e) {
         console.log(e);
         if (error?.response?.status === 400) {

@@ -5,7 +5,8 @@ module.exports = {
       maxWidth: {
         'date': '200px',
         'button': '120px',
-        '32': '32px'
+        '32': '32px',
+        'xs': '381px'
       },
       height: {
         '32': '32px',

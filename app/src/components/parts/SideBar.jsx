@@ -9,6 +9,7 @@ import {
     TableIcon,
     UserGroupIcon
 } from "@heroicons/react/solid";
+import {v4} from "uuid";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
@@ -63,7 +64,7 @@ const SideBar = () => {
                 <Sidebar.Items>
                     <Sidebar.ItemGroup>
                         {menu.map(item => <Sidebar.Item
-                                key={item.title}
+                                key={v4()}
                                 icon={item.icon}
                                 onClick={() => clickHandler(item.to)}
                                 label={item.label}

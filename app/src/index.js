@@ -1,3 +1,4 @@
+import 'datatables.net-responsive';
 import React, {createContext} from 'react';
 import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
@@ -11,6 +12,9 @@ import AuthStore from "./store/auth-store";
 import AppStore from "./store/App/App";
 import NotificationsStore from "./store/Notifications/Notifications";
 import BillingStore from "./store/Billing/Billing";
+
+// JQ
+window.$ = window.jQuery = require('jquery');
 
 // Store instances
 const authStore = new AuthStore();

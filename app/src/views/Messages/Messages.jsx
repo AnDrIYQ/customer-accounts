@@ -7,6 +7,7 @@ import {Tabs} from 'flowbite-react'
 import Grid from "../../components/atomary/containers/Grid";
 import Card from "../../components/atomary/viewers/Card";
 import {Avatar, Badge} from "@material-ui/core";
+import {v4} from "uuid";
 import Image from "../../components/atomary/typography/Image";
 import {Toast} from "flowbite-react";
 import {AnimationTypes, ComponentTransitionList, Presets} from "react-component-transition";
@@ -36,7 +37,7 @@ const Messages = () => {
                                icon={EyeIcon}
                     >
                         <Grid GAP={"gap-8"} NOGROW COL VA={"start"} FULL>
-                            <ComponentTransitionList key={new Date()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
+                            <ComponentTransitionList key={v4()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
                             {!!billingStore.messages.length && billingStore.messages.slice(0).reverse().map(message => {
                                 return <Presets.TransitionFade key={message._id} className={"w-full"}>
                                     <Toast key={message._id} className="space-x-4 p-16 mr-0 flex-nowrap max-w-xl divide-x divide-gray-200 dark:divide-gray-700">
@@ -74,17 +75,6 @@ const Messages = () => {
                                     </div>
                                 </Toast>
                             }
-                        </Grid>
-                    </Tabs.Item>
-
-                    <Tabs.Item title="Remove"
-                               className="tab"
-                               icon={DocumentRemoveIcon}
-                    >
-                        <Grid GAP={"gap-8"} NOGROW>
-                            <Card customClasses={"max-w-md"}>
-                                Remove
-                            </Card>
                         </Grid>
                     </Tabs.Item>
 

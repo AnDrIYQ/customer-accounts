@@ -4,6 +4,13 @@
   }
 }
 
+.dataTables_wrapper {
+  display: initial;
+  div {
+    display: initial;
+  }
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
   transition: background-color .3s !important;
@@ -243,6 +250,7 @@ button:focus {
     display: flex;
     align-items: flex-start;
     width: 100%;
+    max-width: 90vw;
   }
   & > div > div:first-child {
     width: 100%;
@@ -263,6 +271,9 @@ button:focus {
     --h: var(--hue);
     --switch: calc((var(--light) - var(--threshold)) * -100%);
     color: hsl(0, 0%, var(--switch));
+    &[data-testid="list-group-item"] {
+      color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+    }
     &[data-testid="accordion-title-element"] {
       color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
     }
@@ -272,6 +283,20 @@ button:focus {
     &:hover, &:focus {
       --switch: calc((var(--light) - var(--threshold)) * -100%);
       color: hsl(0, 0%, var(--switch));
+    }
+  }
+}
+
+.with_messages {
+  div[data-testid="accordion-element"] {
+    .collapse {
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 250px;
+      display: flex;
+      flex-wrap: nowrap;
+      padding-right: 10px;
     }
   }
 }
@@ -319,4 +344,12 @@ input::file-selector-button {
     --h: var(--hue);
     background-color: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
   }
+}
+
+.css-1hb7zxy-IndicatorsContainer {
+  flex-grow: 0 !important;
+}
+
+.toaster {
+  max-width: 80vw !important;
 }

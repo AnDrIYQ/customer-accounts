@@ -17,7 +17,7 @@ class MessageService {
         })
         const saved = await newMessage.save();
         if (saved) {
-            EVENT_BUS.io.to(customerId.toString()).emit('message', newMessage)
+            EVENT_BUS?.io?.to(customerId.toString())?.emit('message', newMessage)
         }
         return {
             status: !!saved,

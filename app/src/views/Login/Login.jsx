@@ -35,8 +35,8 @@ const Login = () => {
                 <Input type={"password"}
                        required value={password} setValue={setPassword} label={"Password"} id={"password"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button action={() => navigate('/register')}>Register</Button>
-                    <Button action={() => authStore.login(email, password)}>Login</Button>
+                    <Button unwidth action={() => navigate('/register')}>Register</Button>
+                    <Button unwidth action={() => authStore.login(email, password)}>Login</Button>
                 </Grid>
             </Grid>
         </Card>

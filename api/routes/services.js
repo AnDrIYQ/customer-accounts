@@ -6,7 +6,6 @@ const roleMiddleware = require('../middlewares/role-middleware')
 const ServiceController = require('../controllers/ServicesController')
 
 // Services
-const uploadImages = require('../services/imageService')
 const { body, check} = require('express-validator');
 
 // Router

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import {v4} from "uuid";
 
 export default class NotificationsStore {
     // Fields
@@ -36,22 +37,22 @@ export default class NotificationsStore {
     }
     // Actions
     message(text) {
-        this.notify({ id: new Date(), content: text, time: 5 });
+        this.notify({ id: v4(), content: text, time: 5 });
     }
     adminMessage(text) {
-        this.notify({ id: new Date(), content: text, time: 5, link: '/messages' });
+        this.notify({ id: v4(), content: text, time: 5, link: '/messages' });
     }
     success(text) {
-        this.notify({ id: new Date(), content: text, time: 5, type: 'success' });
+        this.notify({ id: v4(), content: text, time: 5, type: 'success' });
     }
-    warning(text) {
-        this.notify({ id: new Date(), content: text, time: 5, type: 'warning' });
+    warning(text, seconds) {
+        this.notify({ id: v4(), content: text, type: 'warning', time: !!seconds ? seconds : 5 });
     }
     serverError(data) {
-        this.notify({ id: new Date(), content: data.message, time: 5, type: 'warning' });
+        this.notify({ id: v4(), content: data.message, time: 5, type: 'warning' });
     }
     error(text) {
-        this.notify({ id: new Date(), content: text, time: 5, type: 'error' });
+        this.notify({ id: v4(), content: text, time: 5, type: 'error' });
     }
     validationError(data) {
         let text = '';

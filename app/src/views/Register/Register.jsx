@@ -37,8 +37,8 @@ const Register = () => {
                        required value={password} setValue={setPassword} label={"Password"} id={"password"} />
                 <Textarea setValue={setBio} value={bio} label={"About you"} placeholder={"Biography"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button action={() => navigate('/login')}>Login</Button>
-                    <Button action={() => authStore.register(email, password, username, bio)}>Register</Button>
+                    <Button unwidth action={() => navigate('/login')}>Login</Button>
+                    <Button unwidth action={() => authStore.register(email, password, username, bio)}>Register</Button>
                 </Grid>
             </Grid>
         </Card>

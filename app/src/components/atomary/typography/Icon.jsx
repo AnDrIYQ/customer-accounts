@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Context} from "../../../index";
 
-const Icon = ({ children, color, mini, customClasses, click }) => {
+const Icon = ({ children, color, mini, avatar, customClasses, click }) => {
     const { appStore } = useContext(Context)
 
     const getColor = () => ({
@@ -9,7 +9,7 @@ const Icon = ({ children, color, mini, customClasses, click }) => {
     })
 
     return (
-        <div onClick={click} className={"icon" + `${mini ? '--mini ' : ' '}` + customClasses} style={getColor()}>
+        <div onClick={click} className={"icon" + `${mini ? '--mini ' : ''}` + `${avatar ? '--avatar ' : ' '}` + customClasses} style={getColor()}>
             { children }
         </div>
     );

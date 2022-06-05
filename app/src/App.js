@@ -19,13 +19,19 @@ import Messages from "./views/Messages/Messages";
 import Customers from "./views/Customers/Customers";
 import Tariff from "./views/Tariffs/Tariff";
 import Currency from "./views/Currency/Currency";
+import Services from "./views/Services/Services";
+import Invoices from "./views/Invoices/Invoices";
 
 function App() {
-  const { authStore, appStore, notificationsStore } = useContext(Context);
+  const { authStore, appStore, notificationsStore, billingStore } = useContext(Context);
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+      window.router = navigate;
       window.notifications = notificationsStore;
+      window.app = appStore;
+      window.billing = billingStore;
       if (localStorage.getItem('app_token')) {
           authStore.checkAuth().then(() => {
               appStore.updateColor(authStore?.user?.config?.theme_color);
@@ -42,7 +48,9 @@ function App() {
                           <Route path="/config" element={<Config />} />
                           <Route path="/messages" element={<Messages />} />
                           <Route path="/customers" element={<Customers />} />
+                          <Route path="/services" element={<Services />} />
                           <Route path="/currencies" element={<Currency />} />
+                          <Route path="/invoices" element={<Invoices />} />
                           <Route path="/tariffs" element={<Tariff />} />
                           <Route path="/" element={<Dashboard />} />
                       </Route>

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Select, Label} from 'flowbite-react';
+import {v4} from "uuid";
 
 const SelectField = ({ variants, label, id, init, setValue }) => {
     return <div className={"flex gap-16 items-center flex-row select-container"}>
@@ -10,7 +11,7 @@ const SelectField = ({ variants, label, id, init, setValue }) => {
         >
             {variants &&
                 variants.map(element =>
-                    <option key={element.value} selected={init === element.value} value={element.value}>{element.text}</option>
+                    <option key={v4()} selected={init === element.value} value={element.value}>{element.text}</option>
                 )
             }
         </Select>
