@@ -40,7 +40,7 @@ const Notification = ({ content, id, type, link, ...rootAttributes }) => {
 
     return (
 
-        <div className="card w-full shadow-md bg-white cursor-pointer p-16 rounded-md" {...rootAttributes} onClick={clickHandler}>
+        <div className="card w-full toaster shadow-md bg-white cursor-pointer p-16 rounded-md" {...rootAttributes} onClick={clickHandler}>
             <Grid NOGROW GAP={"gap-12"} WRAP="no">
                 <Icon color={typeColor}>{ typeIcon }</Icon>
                 <Grid NOGROW GAP HA="space" FULL VA="center" WRAP="no">

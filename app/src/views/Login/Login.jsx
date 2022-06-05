@@ -7,9 +7,9 @@ import Text from "../../components/atomary/typography/Text";
 import Input from "../../components/atomary/inputs/Input";
 import Button from "../../components/atomary/typography/Button";
 import { useNavigate } from "react-router-dom";
-import {UserIcon} from "@heroicons/react/outline";
 import Icon from "../../components/atomary/typography/Icon";
 import {UserCircleIcon} from "@heroicons/react/solid";
+import {observer} from "mobx-react-lite";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -35,12 +35,12 @@ const Login = () => {
                 <Input type={"password"}
                        required value={password} setValue={setPassword} label={"Password"} id={"password"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button action={() => navigate('/register')}>Register</Button>
-                    <Button action={() => authStore.login(email, password)}>Login</Button>
+                    <Button unwidth action={() => navigate('/register')}>Register</Button>
+                    <Button unwidth action={() => authStore.login(email, password)}>Login</Button>
                 </Grid>
             </Grid>
         </Card>
     );
 };
 
-export default Login;
+export default observer(Login);

@@ -11,7 +11,7 @@ const Notifications = (props) => {
         <div className="fixed notifications-block top-0 right-0 flex-col m-16 gap-16 flex items-end w-full max-w-xs">
             <ComponentTransitionList enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit} >
                 {notificationsStore.notifications.map(notification =>
-                    <Presets.TransitionFade key={notification.id} className={"w-full"}>
+                    <Presets.TransitionFade key={notification.id} className={"w-full justify-end"}>
                         <Notification key={notification?.id}
                                       id={notification?.id}
                                       type={notification.type}

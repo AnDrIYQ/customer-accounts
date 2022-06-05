@@ -26,9 +26,9 @@ class ConfigController {
             }
             const response = await configService.update(getAccountInfo(req), {
                 theme_color: req.body.theme_color,
-                notifications: req.body.notifications,
+                notifications: !!JSON.parse(req.body.notifications),
                 currency: req.body.currency,
-                image: req.files[0]?.filename
+                image: req.files[0]?.filename || null
             });
             res.status(200).json(response);
         } catch(e) {

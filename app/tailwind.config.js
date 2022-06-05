@@ -1,12 +1,12 @@
 module.exports = {
   content: ["./src/**/*.{html,js,jsx}", './node_modules/flowbite-react/**/*.js'],
   theme: {
-    colors: {
-    },
     extend: {
       maxWidth: {
+        'date': '200px',
         'button': '120px',
-        '32': '32px'
+        '32': '32px',
+        'xs': '381px'
       },
       height: {
         '32': '32px',
@@ -26,12 +26,12 @@ module.exports = {
         '16': '16px',
         '32': '32px',
       },
+      screens: {
+        'xss': '200px'
+      }
     },
-    screens: {
-      'xss': '200px'
-    }
   },
   plugins: [
-      require('flowbite/plugin')
+    require('flowbite/plugin')
   ],
 }

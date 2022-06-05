@@ -9,9 +9,11 @@ import {
     TableIcon,
     UserGroupIcon
 } from "@heroicons/react/solid";
+import {v4} from "uuid";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import {CurrencyDollarIcon} from "@heroicons/react/outline";
 
 const SideBar = () => {
     const navigate = useNavigate();
@@ -36,6 +38,7 @@ const SideBar = () => {
                 {title: 'Dashboard', to: '/', icon: HomeIcon, label: 'Home'},
                 {title: 'Customers', to: '/customers', icon: UserGroupIcon},
                 {title: 'Tariffs', to: '/tariffs', icon: TableIcon },
+                {title: 'Currencies', to: '/currencies', icon: CurrencyDollarIcon },
                 {title: 'Config', to: '/config', icon: AdjustmentsIcon },
                 {title: 'Logout', to: '/logout', icon: LogoutIcon }
             ])
@@ -61,7 +64,7 @@ const SideBar = () => {
                 <Sidebar.Items>
                     <Sidebar.ItemGroup>
                         {menu.map(item => <Sidebar.Item
-                                key={item.title}
+                                key={v4()}
                                 icon={item.icon}
                                 onClick={() => clickHandler(item.to)}
                                 label={item.label}

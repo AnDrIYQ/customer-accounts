@@ -58,7 +58,9 @@ class ConfigService {
         config.theme_color = newData.theme_color;
         config.notifications = newData.notifications;
         config.currency = newData.currency;
-        config.image = newData.image;
+        if (newData.image) {
+            config.image = newData.image;
+        }
         const isSaved = await config.save();
         return {
             status: !!isSaved,
@@ -84,11 +86,15 @@ class ConfigService {
         })
     }
     async update (account, newData) {
+        let image;
+        if (newData.image) {
+            image = process.env.API_URL + '/images/' + newData.image
+        }
         return await this.updateConfig(account, {
             theme_color: newData.theme_color,
             notifications: newData.notifications,
             currency: newData.currency,
-            image: process.env.API_URL + '/images/' + newData.image
+            image
         })
     }
 }

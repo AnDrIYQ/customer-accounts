@@ -23,7 +23,7 @@ router.post('/currencies/add',
     body('symbol').optional().isLength({max: 1, min: 1}),
     authMiddleware, roleMiddleware, CurrencyController.post);
 router.put('/currencies/:id/update',
-    body('name').isLength({min: 4, max: 10}),
+    body('name').isLength({min: 3, max: 10}),
     body('symbol').optional().isLength({max: 1, min: 1}),
     authMiddleware, roleMiddleware, CurrencyController.update);
 router.delete('/currencies/delete/:id', authMiddleware, roleMiddleware, CurrencyController.remove);

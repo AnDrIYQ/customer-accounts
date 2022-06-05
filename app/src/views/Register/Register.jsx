@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Textarea from "../../components/atomary/inputs/Textarea";
 import {UserAddIcon} from "@heroicons/react/solid";
 import Icon from "../../components/atomary/typography/Icon";
+import {observer} from "mobx-react-lite";
 
 
 const Register = () => {
@@ -36,12 +37,12 @@ const Register = () => {
                        required value={password} setValue={setPassword} label={"Password"} id={"password"} />
                 <Textarea setValue={setBio} value={bio} label={"About you"} placeholder={"Biography"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button action={() => navigate('/login')}>Login</Button>
-                    <Button action={() => authStore.register(email, password, username, bio)}>Register</Button>
+                    <Button unwidth action={() => navigate('/login')}>Login</Button>
+                    <Button unwidth action={() => authStore.register(email, password, username, bio)}>Register</Button>
                 </Grid>
             </Grid>
         </Card>
     );
 };
 
-export default Register;
+export default observer(Register);

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import notificationStore from '../store/Notifications/Notifications';
 
 export const API_URL = `http://31.131.24.72:3300`;
 
@@ -23,12 +22,13 @@ $api.interceptors.response.use(config => {
 },  async (error) => {
     let originalRequest;
     try {
-        originalRequest = error.config();
+        originalRequest = error?.config();
     } catch (e) {
-        if (error.response.status === 400) {
+        console.log(e);
+        if (error?.response?.status === 400) {
             window.notifications.validationError(error.response.data);
         }
-        if (error.response.status === 500) {
+        if (error?.response?.status === 500) {
             console.log(500)
             window.notifications.serverError(error.response.data);
         }

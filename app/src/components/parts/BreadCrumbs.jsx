@@ -3,11 +3,12 @@ import Card from "../atomary/viewers/Card";
 import Text from "../atomary/typography/Text";
 import Icon from "../atomary/typography/Icon";
 import {ChevronDoubleRightIcon, HomeIcon} from "@heroicons/react/solid";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
 const BreadCrumbs = () => {
     const navigate = useNavigate();
-    const location = useLocation()
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const [urls, setUrls] = useState([
         {text: 'Dashboard', link: '/', icon: <HomeIcon />, first: true},
     ]);
@@ -18,8 +19,15 @@ const BreadCrumbs = () => {
             breadcrumbs.push({
                 text: item.charAt(0).toUpperCase() + item.slice(1),
                 link: '/' + item,
-                first: false
+                first: false,
             })
+            if (searchParams.get('id')) {
+                breadcrumbs.push({
+                    text: "View",
+                    link: '/' + item + '?id=' + searchParams.get('id'),
+                    first: false,
+                })
+            }
         })
         setUrls([...urls, ...breadcrumbs])
     }, []);

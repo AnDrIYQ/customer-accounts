@@ -11,11 +11,30 @@ import Button from "../../components/atomary/typography/Button";
 import Textarea from "../../components/atomary/inputs/Textarea";
 import Checkbox from "../../components/atomary/inputs/Checkbox";
 import SelectField from "../../components/atomary/inputs/SelectField";
+import FormService from "../../services/FormService";
+import File from "../../components/atomary/inputs/File";
+import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
 const Config = () => {
+    const {authStore, appStore, notificationsStore } = useContext(Context);
+    const navigate = useNavigate();
+
     // Refs
     const fileField = useRef(null);
-    const {authStore, appStore } = useContext(Context);
+    // State
+    const [themeColor, setThemeColor] = useState(authStore?.user?.config?.theme_color?.toString() || "#ffffff");
+    const [currencyId, setCurrencyId] = useState(authStore?.user?.config?.currency?.toString() || "");
+    const [showNotifications, setShowNotifications] = useState(!!authStore?.user?.config?.notifications);
+
+    const [username, setUsername] = useState(authStore?.user?.admin?.username || authStore?.user?.customer?.username || "");
+    const [bio, setBio] = useState(authStore?.user?.admin?.bio || authStore?.user?.customer?.bio || "");
+    const [password, setPassword] = useState(null);
+    const [accountId] = useState(authStore?.user?.admin?.id || authStore?.user?.customer?.id || 'None');
+    const [email] = useState(authStore?.user?.user?.email || '0');
+
+    const [sureRemove, setSureRemove] = useState(false);
+
     const [currenciesVariants, setCurrenciesVariants] = useState([]);
 
     useEffect(() => {
@@ -24,22 +43,70 @@ const Config = () => {
             appStore.makeRouteLoaded();
             const list = [];
             appStore.currencies.map(curr => {
-                list.push({value: curr.symbol, text: curr.name});
+                list.push({value: curr._id, text: curr.symbol});
             })
             setCurrenciesVariants(list);
         });
-    });
+    }, []);
 
-    // const uploadFile = () => {
-    //     const data = new FormData();
-    //     Object.values(fileField.current.files).forEach(file => {
-    //         data.append("images", file);
-    //     });
-    //     data.append('name', 'Hello')
-    //     FormService.send('/users', data).then(r => {
-    //         return null;
-    //     });
-    // };
+    const configHandler = () => {
+        const data = new FormData();
+        Object.values(fileField.current.files).forEach(file => {
+            data.append("image", file);
+        });
+        data.append('theme_color', themeColor);
+        data.append('notifications', showNotifications.toString());
+        data.append('currency', currencyId);
+
+        appStore.loadRoute();
+        FormService.configUpdate(data).then(r => {
+            if (r?.status === 200) {
+                notificationsStore.success("Config changed")
+                setTimeout(() => {
+                    appStore.setConfig(r.data.data);
+                    appStore.updateColor(r.data.data.theme_color);
+                    appStore.makeRouteLoaded();
+                }, 700)
+            }
+        });
+    };
+
+    const accountHandler = () => {
+        let action = "";
+        if (authStore?.user?.admin?.username) {
+            action = "updateAdmin"
+        } else {
+            action = "updateUser"
+        }
+        let data = { username };
+        if (bio) {
+            data["bio"] = bio;
+        }
+        if (password) {
+            data["password"] = password;
+        }
+
+        appStore.loadRoute();
+        FormService[action].apply(this, [data]).then(response => {
+            if (response.status === 200) {
+                notificationsStore.success("Account changed");
+            }
+            setTimeout(() => {
+                appStore.makeRouteLoaded();
+            }, 700);
+        })
+    }
+
+    const removeAccount = () => {
+        FormService.removeCustomer().then((response) => {
+            if (response.status === 200) {
+                authStore.logout().then(r => {
+                    notificationsStore.warning("Account deleted, bye");
+                    navigate('/register');
+                });
+            }
+        })
+    }
 
     return (
         <div className={"tabs"}>
@@ -56,32 +123,43 @@ const Config = () => {
                             <Text align={"center"}>You can change your settings here</Text>
                             <Grid FULL GAP VA={"start"} HA={"center"} NOGROW>
                                 <Collapse opened title={"System"}>
-                                    <Input right type={"file"} placeholder={"Image"} required label={"Change Image"} />
-                                    <Input right type={"color"} required label={"Theme color"} />
-                                    <SelectField id={"currency"} required label={"Select currency"} variants={Array.from(currenciesVariants)} />
-                                    <Checkbox label={"Show notifications?"} />
+                                    <File id={"image"} label={"Change Image"} innerRef={fileField} setValue={() => {}} />
+                                    <Input right type={"color"} value={themeColor} label={"Theme color"} setValue={setThemeColor} />
+                                    {authStore?.user?.customer &&
+                                    <SelectField id={"currency"} label={"Select currency"} init={currencyId} setValue={setCurrencyId} variants={Array.from(currenciesVariants)}  />}
+                                    {authStore?.user?.customer &&
+                                        <Checkbox label={"Show notifications?"} checked={!!showNotifications} setValue={setShowNotifications} />}
                                     <Grid FULL HA={"end"}>
-                                        <Button right>Save</Button>
+                                        <Button action={configHandler} right>Save</Button>
                                     </Grid>
                                 </Collapse>
                             </Grid>
                             <Grid FULL VA={"start"} HA={"center"} NOGROW>
                                 <Collapse opened title={"Account"}>
-                                    <Input right type={"text"} placeholder={"Your name"} required label={"Change Name"} />
-                                    <Textarea right type={"text"} placeholder={"About you"} required label={"Change Biography"} />
-                                    <Input right type={"password"} placeholder={"Change if you want"} required label={"Change password"} />
+                                    <Input right type={"email"} value={email} label={"Account email"} disabled />
+                                    <Input right type={"text"} value={username} placeholder={"Your name"} label={"Change Name"} setValue={setUsername} />
+                                    <Textarea right type={"text"} value={bio} placeholder={"About you"} label={"Change Biography"} setValue={setBio} />
+                                    {authStore?.user?.customer &&
+                                        <Input right type={"password"} value={password} placeholder={"Change if you want"} setValue={setPassword} label={"Change password"} />}
                                     <Grid FULL HA={"end"}>
-                                        <Button right>Save</Button>
+                                        <Button action={accountHandler} right>Save</Button>
                                     </Grid>
                                 </Collapse>
                             </Grid>
-                            <Grid FULL VA={"start"} HA={"center"} NOGROW>
+                            {authStore?.user?.customer && <Grid FULL VA={"start"} HA={"center"} NOGROW>
                                 <Collapse title={"Danger!"}>
-                                    <Grid FULL HA={"end"}>
-                                        <button className={"!bg-red-500 hover:!bg-red-500 focus:!bg-red-500 active:!bg-red-500"}>Remove account</button>
+                                    <Grid FULL HA={"start"} GAP>
+                                        <Input disabled type={"text"} value={accountId} label={"Account id"} />
+                                        {sureRemove && <Text>Are you sure?</Text>}
+                                        {!sureRemove ? <button onClick={() => setSureRemove(true)} className={"rounded-sm !bg-red-500 hover:!bg-red-500 focus:!bg-red-500 active:!bg-red-500"}>Remove account</button> :
+                                            <Grid FULL HA={"start"} GAP>
+                                                <button className={"!bg-red-500 hover:!bg-red-500 focus:!bg-red-500 rounded-sm active:!bg-red-500"} onClick={removeAccount}>Yes</button>
+                                                <button className={"theme_color rounded-sm"} onClick={() => setSureRemove(false)}>No</button>
+                                            </Grid>
+                                        }
                                     </Grid>
                                 </Collapse>
-                            </Grid>
+                            </Grid>}
                         </Grid>
                     </Tabs.Item>
                 </Tabs.Group>
@@ -90,4 +168,4 @@ const Config = () => {
     );
 };
 
-export default Config;
+export default observer(Config);

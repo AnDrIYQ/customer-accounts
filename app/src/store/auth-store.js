@@ -22,11 +22,7 @@ export default class AuthStore {
     }
 
     setConfig(config) {
-        if (this.user.customer) {
-            this.user.customer.config = config;
-        } else {
-            this.user.admin.config = config;
-        }
+        this.user.config = config;
     }
 
     // Actions (async)

@@ -7,6 +7,9 @@ class FieldService {
     async get() {
         return FieldModel.find({});
     }
+    async removeByTariff(tariffId) {
+        await FieldModel.remove({tariff: tariffId});
+    }
 }
 
 module.exports = new FieldService();

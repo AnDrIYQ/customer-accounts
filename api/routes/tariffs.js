@@ -20,14 +20,14 @@ router.get('/tariffs/:id', authMiddleware, TariffController.getById);
 
 router.post('/tariffs/add',
     body('name').not().isEmpty(),
-    body('price').isNumeric(),
+    body('price').isFloat({ min: 0 }),
     body('description').optional().isLength({min: 10, max: 500}),
     body('terms').isNumeric(),
-    body('fields').isArray(),
+    body('fields').optional().isArray(),
     authMiddleware, roleMiddleware, TariffController.post);
 router.put('/tariffs/update',
     body('name').not().isEmpty(),
-    body('price').optional().isNumeric(),
+    body('price').optional().isFloat({ min: 0 }),
     body('description').optional().isLength({min: 10, max: 500}),
     body('terms').optional().isNumeric(),
     body('fields').optional().isArray(),

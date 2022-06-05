@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const Preloaded = ({ children, loading }) => {
     return children && React.Children.map(children, child => (

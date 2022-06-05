@@ -8,7 +8,16 @@ const TariffDto = require("../dtos/tariff-dto");
 
 class ServiceService {
     async get (customerId, from = 0, limit = null) {
-        return ServiceModel.find({customer: customerId}, {}, {from: from, limit: limit});
+        let services = await ServiceModel.find({customer: customerId}, {}, {from: from, limit: limit});
+        const Services = [];
+        services.map((service) => Services.push(service.toObject()));
+        return Promise.all(Services.map(async (service) => {
+            const serviceTariff = await tariffService.getById(service.tariff);
+            const tariffData = new TariffDto(serviceTariff);
+            service.tariff_name = tariffData.name;
+            service.terms = tariffData.terms;
+            return service;
+        }));
     }
     async getById (id, customerId) {
         return ServiceModel.findOne({customer: customerId, _id: id});
@@ -27,6 +36,9 @@ class ServiceService {
         filterIds.map(id => {
             excludes.push({_id: {$ne: id} })
         })
+        if (!excludes?.length) {
+            return ServiceModel.find({customer: customerId});
+        }
         return ServiceModel.find({
             customer: customerId,
             $and: excludes

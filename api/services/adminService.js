@@ -1,11 +1,24 @@
 const AdminModel = require('../models/admin-model');
 const UserModel = require('../models/user-model');
+const ConfigModel = require('../models/config-model');
 const AdminDto = require('../dtos/admin-dto');
 const ApiError = require('../exceptions/api-error')
+const ConfigDto = require("../dtos/config-dto");
 
 class AdminService {
     async get() {
-        return AdminModel.find({});
+        const adminsOut = [];
+        const admins = await AdminModel.find({});
+        await Promise.all(admins.map(async (admin) => {
+            const config = await ConfigModel.findOne({_id: admin.config});
+            const conf = new ConfigDto(config);
+            const adm = new AdminDto(admin)
+            adminsOut.push({
+                ...conf,
+                ...adm
+            });
+        }));
+        return adminsOut;
     }
     async updateAdmin (name, bio, accountInfo) {
         const user = await UserModel.findOne({email: accountInfo.email});

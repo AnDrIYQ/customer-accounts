@@ -36,17 +36,20 @@ class TariffService {
             description
         });
         let fieldsIds = [];
-        await Promise.all(fields.map(async (field) => {
-            this.validField(field);
-            const newField = await FieldModel.create({
-                title: field.title,
-                type: field.type,
-                value: field.value,
-                tariff: tariff._id
-            });
-            fieldsIds.push(newField);
-        }));
-        tariff.fields = fieldsIds;
+        if (fields?.length) {
+            await Promise.all(fields.map(async (field) => {
+                this.validField(field);
+                const newField = await FieldModel.create({
+                    title: field.title,
+                    type: field.type,
+                    value: field.value,
+                    tariff: tariff._id
+                });
+                fieldsIds.push(newField);
+            }));
+            tariff.fields = fieldsIds;
+        }
+
         const created = await tariff.save();
 
         return {
