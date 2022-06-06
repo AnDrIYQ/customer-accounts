@@ -84,8 +84,8 @@ function Dashboard() {
                         </Grid>
                         <Grid FULL GAP={"gap-8"} NOGROW customClasses={"my-16"}>
                             <Head>Last customers</Head>
-                            {!billingStore.customers.length && <span>There are no customers for service</span>}
-                            {billingStore.customers && billingStore.customers.slice(0, 5).map(customer => <Panel rounded key={v4()}>
+                            {!billingStore?.customers?.length && <span>There are no customers for service</span>}
+                            {billingStore?.customers && billingStore?.customers?.slice(0, 5).map(customer => <Panel rounded key={v4()}>
                                 <span>ID: {customer._id}</span>
                                 Name: {customer.username} <Icon click={() => navigate(`/customers?id=${customer._id}`)}><ChevronDoubleRightIcon /></Icon>
                             </Panel>)}
