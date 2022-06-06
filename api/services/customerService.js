@@ -12,16 +12,16 @@ const bcrypt = require("bcrypt");
 
 class CustomerService {
     async get (from = 0, limit = null) {
-        let users = []
+        let users = [];
         const customers = await CustomerModel.find({}, {},{skip: from, limit})
         customers.map((r) => users.push(r.toObject()));
         await Promise.all(users.map(async (user) => {
             const account = await UserModel.findOne({customer_status: ObjectId(user._id)})
             const config = await ConfigModel.findOne({_id: ObjectId(user.config)})
-            user.email = account.email;
-            user.password = account.password;
-            user.image = config.image;
-            user.color = config.theme_color;
+            user["email"] = account?.email;
+            user["password"] = account?.password;
+            user["image"] = config?.image;
+            user["color"] = config?.theme_color;
         }));
         return {users}
     }

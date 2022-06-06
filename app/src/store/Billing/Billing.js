@@ -102,7 +102,7 @@ export default class BillingStore {
         let result = [];
         const response = await CustomerService.get(from, limit);
         this.setCustomers(response?.data?.data?.users);
-        result = response.data.data.users;
+        result = response?.data?.data?.users;
         return result;
     }
     async getTariffs (from, limit) {

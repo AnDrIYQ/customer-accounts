@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: 'http://31.131.24.72:3000'
 }));
 app.use(cookieParser());
 // Routes uses

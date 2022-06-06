@@ -52,7 +52,7 @@ const Services = () => {
     const addService = () => {
         const data = {
             name: newName,
-            tariff: createTariff.value.toString()
+            tariff: createTariff?.value?.toString()
         };
         if (startDate) {
             data['date'] = new Date(startDate);
