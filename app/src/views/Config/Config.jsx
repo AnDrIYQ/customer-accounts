@@ -30,7 +30,7 @@ const Config = () => {
     const [username, setUsername] = useState(authStore?.user?.admin?.username || authStore?.user?.customer?.username || "");
     const [bio, setBio] = useState(authStore?.user?.admin?.bio || authStore?.user?.customer?.bio || "");
     const [password, setPassword] = useState(null);
-    const [accountId] = useState(authStore?.user?.admin?.id || authStore?.user?.customer?.id || 'None');
+    const [accountId] = useState(authStore?.user?.admin?.id || authStore?.user?.customer?.id || 'Немає');
     const [email] = useState(authStore?.user?.user?.email || '0');
 
     const [sureRemove, setSureRemove] = useState(false);
@@ -61,7 +61,7 @@ const Config = () => {
         appStore.loadRoute();
         FormService.configUpdate(data).then(r => {
             if (r?.status === 200) {
-                notificationsStore.success("Config changed")
+                notificationsStore.success("Налаштування змінено")
                 setTimeout(() => {
                     appStore.setConfig(r.data.data);
                     appStore.updateColor(r.data.data.theme_color);
@@ -89,7 +89,7 @@ const Config = () => {
         appStore.loadRoute();
         FormService[action].apply(this, [data]).then(response => {
             if (response.status === 200) {
-                notificationsStore.success("Account changed");
+                notificationsStore.success("Обліковий запис змінено");
             }
             setTimeout(() => {
                 appStore.makeRouteLoaded();
@@ -101,7 +101,7 @@ const Config = () => {
         FormService.removeCustomer().then((response) => {
             if (response.status === 200) {
                 authStore.logout().then(r => {
-                    notificationsStore.warning("Account deleted, bye");
+                    notificationsStore.warning("Клієнта видалено, бувайте");
                     navigate('/register');
                 });
             }
@@ -116,45 +116,45 @@ const Config = () => {
                     style="underline"
                 >
                     <Tabs.Item className="tab"
-                               title="Edit"
+                               title="Редагувати"
                                icon={PencilAltIcon}
                     >
                         <Grid GAP={"gap-8"} COL FULL VA={"start"} HA="center" NOGROW>
-                            <Text align={"center"}>You can change your settings here</Text>
+                            <Text align={"center"}>Тут ви можете змінити налаштування</Text>
                             <Grid FULL GAP VA={"start"} HA={"center"} NOGROW>
-                                <Collapse opened title={"System"}>
-                                    <File id={"image"} label={"Change Image"} innerRef={fileField} setValue={() => {}} />
-                                    <Input right type={"color"} value={themeColor} label={"Theme color"} setValue={setThemeColor} />
+                                <Collapse opened title={"Система"}>
+                                    <File id={"image"} label={"Змінити зображення"} innerRef={fileField} setValue={() => {}} />
+                                    <Input right type={"color"} value={themeColor} label={"Колір теми"} setValue={setThemeColor} />
                                     {authStore?.user?.customer &&
-                                    <SelectField id={"currency"} label={"Select currency"} init={currencyId} setValue={setCurrencyId} variants={Array.from(currenciesVariants)}  />}
+                                    <SelectField id={"currency"} label={"Вибрати валюту"} init={currencyId} setValue={setCurrencyId} variants={Array.from(currenciesVariants)}  />}
                                     {authStore?.user?.customer &&
-                                        <Checkbox label={"Show notifications?"} checked={!!showNotifications} setValue={setShowNotifications} />}
+                                        <Checkbox label={"Показувати сповіщення?"} checked={!!showNotifications} setValue={setShowNotifications} />}
                                     <Grid FULL HA={"end"}>
-                                        <Button action={configHandler} right>Save</Button>
+                                        <Button action={configHandler} right>Зберегти</Button>
                                     </Grid>
                                 </Collapse>
                             </Grid>
                             <Grid FULL VA={"start"} HA={"center"} NOGROW>
-                                <Collapse opened title={"Account"}>
-                                    <Input right type={"email"} value={email} label={"Account email"} disabled />
-                                    <Input right type={"text"} value={username} placeholder={"Your name"} label={"Change Name"} setValue={setUsername} />
-                                    <Textarea right type={"text"} value={bio} placeholder={"About you"} label={"Change Biography"} setValue={setBio} />
+                                <Collapse opened title={"Обліковий запис"}>
+                                    <Input right type={"email"} value={email} label={"Email"} disabled />
+                                    <Input right type={"text"} value={username} placeholder={"Ваше ім'я"} label={"Змінити ім'я"} setValue={setUsername} />
+                                    <Textarea right type={"text"} value={bio} placeholder={"Інформація"} label={"Про себе"} setValue={setBio} />
                                     {authStore?.user?.customer &&
-                                        <Input right type={"password"} value={password} placeholder={"Change if you want"} setValue={setPassword} label={"Change password"} />}
+                                        <Input right type={"password"} value={password} placeholder={"Змініть якщо хочете"} setValue={setPassword} label={"Пароль"} />}
                                     <Grid FULL HA={"end"}>
-                                        <Button action={accountHandler} right>Save</Button>
+                                        <Button action={accountHandler} right>Зберегти</Button>
                                     </Grid>
                                 </Collapse>
                             </Grid>
                             {authStore?.user?.customer && <Grid FULL VA={"start"} HA={"center"} NOGROW>
-                                <Collapse title={"Danger!"}>
+                                <Collapse title={"Небезпечно!"}>
                                     <Grid FULL HA={"start"} GAP>
-                                        <Input disabled type={"text"} value={accountId} label={"Account id"} />
-                                        {sureRemove && <Text>Are you sure?</Text>}
-                                        {!sureRemove ? <button onClick={() => setSureRemove(true)} className={"rounded-sm !bg-red-500 hover:!bg-red-500 focus:!bg-red-500 active:!bg-red-500"}>Remove account</button> :
+                                        <Input disabled type={"text"} value={accountId} label={"Ідентифікатор облікового запису"} />
+                                        {sureRemove && <Text>Ви впевнені?</Text>}
+                                        {!sureRemove ? <button onClick={() => setSureRemove(true)} className={"rounded-sm !bg-red-500 hover:!bg-red-500 focus:!bg-red-500 active:!bg-red-500"}>Видалити обліковий запис</button> :
                                             <Grid FULL HA={"start"} GAP>
-                                                <button className={"!bg-red-500 hover:!bg-red-500 focus:!bg-red-500 rounded-sm active:!bg-red-500"} onClick={removeAccount}>Yes</button>
-                                                <button className={"theme_color rounded-sm"} onClick={() => setSureRemove(false)}>No</button>
+                                                <button className={"!bg-red-500 hover:!bg-red-500 focus:!bg-red-500 rounded-sm active:!bg-red-500"} onClick={removeAccount}>Так</button>
+                                                <button className={"theme_color rounded-sm"} onClick={() => setSureRemove(false)}>Ні</button>
                                             </Grid>
                                         }
                                     </Grid>

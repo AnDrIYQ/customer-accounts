@@ -8,7 +8,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const customerId = getAccount(req).customer?.id;
             const response = await serviceService.get(customerId, req.params.from, req.params.limit)
@@ -21,7 +21,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const customerId = getAccount(req).customer?.id;
             const response = await serviceService.getById(req.params.id, customerId);
@@ -34,7 +34,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await serviceService.getForAdmin(req.params.from, req.params.limit)
             res.status(200).json({status: !!response, data: response})
@@ -46,7 +46,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await serviceService.getForAdminById(req.params.id);
             res.status(200).json(response)
@@ -58,7 +58,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await serviceService.create(
                 req.body.name,
@@ -77,7 +77,7 @@ class ServiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const customerId = getAccount(req).customer?.id;
             const response = await serviceService.remove(req.params.id, customerId);

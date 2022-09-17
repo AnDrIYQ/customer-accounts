@@ -10,7 +10,7 @@ class ConfigController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await configService.get(req.params.id);
             res.status(200).json(response);
@@ -22,7 +22,7 @@ class ConfigController {
         try {
             const valid = validateConfigInput(req.body.theme_color, req.body.notifications);
             if (!valid) {
-                return next(ApiError.BadRequest('Validation error'))
+                return next(ApiError.BadRequest('Помилка валідації'))
             }
             const response = await configService.update(getAccountInfo(req), {
                 theme_color: req.body.theme_color,
@@ -39,7 +39,7 @@ class ConfigController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await configService.reset(req.params.id, getAccountInfo(req));
             res.status(200).json(response);

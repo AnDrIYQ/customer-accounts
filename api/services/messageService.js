@@ -7,7 +7,7 @@ class MessageService {
     async write (admin, customerId, message, invoice) {
         const customer = await CustomerModel.findById(customerId);
         if (!customer) {
-            throw ApiError.BadRequest("This customer does not exists");
+            throw ApiError.BadRequest("Цього клієнта не існує");
         }
         const newMessage = new MessageModel({
             message,
@@ -33,7 +33,7 @@ class MessageService {
     async getById (account, id) {
         const message = await MessageModel.findById(id);
         if (!message) {
-            throw ApiError.BadRequest("This message does not exists")
+            throw ApiError.BadRequest("Цього повідомлення не існує")
         }
         if (!account.customer || account.customer.id != message.to) {
             throw ApiError.AccessError();

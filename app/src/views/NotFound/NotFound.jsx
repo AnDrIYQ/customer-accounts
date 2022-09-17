@@ -10,8 +10,8 @@ const NotFound = () => {
 
     return <Card customClasses={"py-32 gap-16"} >
         <Head>404</Head>
-        <Text>This route is not found</Text>
-        <Button action={() => navigate('/')}>Go Home</Button>
+        <Text>Ой! Цей шлях не знайдено</Text>
+        <Button action={() => navigate('/')}>На головну</Button>
     </Card>
 };
 

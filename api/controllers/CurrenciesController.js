@@ -9,7 +9,7 @@ class CurrencyController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await currencyService.all(req.params.from, req.params.limit);
             res.status(200).json({status: !!response, data: response})
@@ -21,7 +21,7 @@ class CurrencyController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await currencyService.getById(req.params.id);
             res.status(200).json({status: !!response, data: response})
@@ -33,7 +33,7 @@ class CurrencyController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await currencyService.createCurrency(req.body.name, req.body.symbol);
             res.status(200).json({status: !!response, data: response})
@@ -45,7 +45,7 @@ class CurrencyController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await currencyService.updateCurrency(req.params.id, req.body.name, req.body.symbol);
             res.status(200).json(response)
@@ -57,7 +57,7 @@ class CurrencyController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await currencyService.removeCurrency(req.params.id);
             res.status(200).json(response)

@@ -9,7 +9,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await invoiceService.all(req.params.from, req.params.limit);
             res.status(200).json(response);
@@ -21,7 +21,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
         } catch(e) {
             next(e);
@@ -31,7 +31,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const customer = getAccount(req).customer?.id
             const response = await invoiceService.getForCustomer(customer, req.params.from, req.params.limit);
@@ -44,7 +44,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const customer = getAccount(req).customer?.id
             const response = await invoiceService.read(customer, req.params.id);
@@ -57,7 +57,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await invoiceService.makePaid(req.params.id, getAccount(req));
             res.status(200).json(response)
@@ -69,7 +69,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await invoiceService.charge(
                 req.params.customer,
@@ -85,7 +85,7 @@ class InvoiceController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await invoiceService.remove(req.params.id);
             res.status(200).json(response)

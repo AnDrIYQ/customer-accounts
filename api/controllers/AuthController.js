@@ -7,7 +7,7 @@ class AuthController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const {email, password, username, bio} = req.body;
             const userData = await authService.register(email, password, username, bio);
@@ -21,7 +21,7 @@ class AuthController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const {email, password} = req.body;
             const userData = await authService.login(email, password);
@@ -55,7 +55,7 @@ class AuthController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const {email, password, username, bio} = req.body;
             const userData = await authService.registerAdmin(email, password, username, bio);

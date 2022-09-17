@@ -8,7 +8,7 @@ class CustomerController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await customerService.get(req.params.from, req.params.limit);
             res.status(200).json({status: !!response, data: response})
@@ -20,7 +20,7 @@ class CustomerController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await customerService.getById(req.params.id, getAccount(req));
             res.status(200).json(response);
@@ -32,7 +32,7 @@ class CustomerController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await customerService.update(req.body.username, req.body.bio, req.body.password, getAccount(req));
             res.status(200).json(response);
@@ -44,7 +44,7 @@ class CustomerController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await customerService.remove(getAccount(req));
             res.status(200).json(response);

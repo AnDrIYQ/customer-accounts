@@ -58,7 +58,7 @@ function Dashboard() {
                     aria-label="Tabs with icons"
                     style="underline"
                 >
-                    <Tabs.Item title="View"
+                    <Tabs.Item title="Головна"
                                className="tab"
                                icon={EyeIcon}
                     >
@@ -67,7 +67,7 @@ function Dashboard() {
                                 <Grid PD GAP VA={"center"} HA={"space"} onClick={() => navigate(`/customers`)}>
                                     <Grid GAP VA={"end"}>
                                         <Head customClasses={"!text-4xl"}>{billingStore.customersCount()}</Head>
-                                        <Text>customers on service </Text>
+                                        <Text>клієнтів на сервісі </Text>
                                     </Grid>
                                     <Icon><UsersIcon /></Icon>
                                 </Grid>
@@ -76,18 +76,18 @@ function Dashboard() {
                                 <Grid PD GAP VA={"center"} HA={"space"} onClick={() => navigate(`/tariffs`)}>
                                     <Grid GAP VA={"end"}>
                                         <Head customClasses={"!text-4xl"}>{billingStore.tariffsCount()}</Head>
-                                        <Text> tarrifs active</Text>
+                                        <Text> активних тарифів</Text>
                                     </Grid>
                                     <Icon><TableIcon /></Icon>
                                 </Grid>
                             </Card>
                         </Grid>
                         <Grid FULL GAP={"gap-8"} NOGROW customClasses={"my-16"}>
-                            <Head>Last customers</Head>
-                            {!billingStore?.customers?.length && <span>There are no customers for service</span>}
+                            <Head>Останні зареєстровані клієнти</Head>
+                            {!billingStore?.customers?.length && <span>Поки що немає клієнтів на сервісі</span>}
                             {billingStore?.customers && billingStore?.customers?.slice(0, 5).map(customer => <Panel rounded key={v4()}>
                                 <span>ID: {customer._id}</span>
-                                Name: {customer.username} <Icon click={() => navigate(`/customers?id=${customer._id}`)}><ChevronDoubleRightIcon /></Icon>
+                                Ім'я: {customer.username} <Icon click={() => navigate(`/customers?id=${customer._id}`)}><ChevronDoubleRightIcon /></Icon>
                             </Panel>)}
                         </Grid>
                     </Tabs.Item>
@@ -98,7 +98,7 @@ function Dashboard() {
                     aria-label="Tabs with icons"
                     style="underline"
                 >
-                    <Tabs.Item title="View"
+                    <Tabs.Item title="Головна"
                                className="tab"
                                icon={EyeIcon}>
                         <Grid GAP={"gap-8"} NOGROW>
@@ -106,7 +106,7 @@ function Dashboard() {
                                 <Grid PD GAP VA={"center"} HA={"space"} onClick={() => navigate('/services')}>
                                     <Grid GAP VA={"end"}>
                                         <Head customClasses={"!text-4xl"}>{billingStore.servicesCount()}</Head>
-                                        <Text>active services </Text>
+                                        <Text>активних сервісів </Text>
                                     </Grid>
                                     <Icon><ServerIcon /></Icon>
                                 </Grid>
@@ -115,7 +115,7 @@ function Dashboard() {
                                 <Grid PD GAP VA={"center"} HA={"space"} onClick={() => navigate('/invoices')}>
                                     <Grid GAP VA={"end"}>
                                         <Head customClasses={"!text-4xl"}>{billingStore.invoicesCount()}</Head>
-                                        <Text>invoices charged </Text>
+                                        <Text>виставлено рахунків </Text>
                                     </Grid>
                                     <Icon><CalculatorIcon /></Icon>
                                 </Grid>
@@ -124,23 +124,23 @@ function Dashboard() {
                                 <Grid PD GAP VA={"center"} HA={"space"} onClick={() => navigate('/services')}>
                                     <Icon><CashIcon /></Icon>
                                     <Grid GAP VA={"end"}>
-                                        <Text>Amount of debt: </Text>
+                                        <Text>До оплати: </Text>
                                         <Head customClasses={"!text-4xl"}>{(currency || '$') + billingStore.invoicesUnpaid()}</Head>
                                     </Grid>
-                                    <span onClick={() => navigate('/services')} className={"theme_color p-4"}>Register service</span>
+                                    <span onClick={() => navigate('/services')} className={"theme_color p-4"}>Активуйте ваш сервіс</span>
                                 </Grid>
                             </Card>
                         </Grid>
-                        <Head customClasses={"mt-8"}>Last messages</Head>
+                        <Head customClasses={"mt-8"}>Останні повідомлення</Head>
                         <Grid FULL GAP={"gap-8"} NOGROW customClasses={"my-16"}>
                             {!billingStore.messages.length && <span>No messages</span>}
                             <ComponentTransitionList key={v4()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
                                 {billingStore.messages && billingStore.messages.slice(0).reverse().slice(0, 5).map(message =>
                                     <Presets.TransitionFade key={message.message}>
                                         <Panel key={message.message} rounded>
-                                            <span>{new Date(message.date).toDateString()}</span>
-                                            <span>From: {message.from}</span>
-                                            Message: {message.message.substring(0, 10) + '...'} <Icon click={() => navigate('/messages')}><ChevronDoubleRightIcon /></Icon>
+                                            <span>{new Date(message.date).toLocaleDateString()}</span>
+                                            <span>Від: {message.from}</span>
+                                            Повідомлення: {message.message.substring(0, 10) + '...'} <Icon click={() => navigate('/messages')}><ChevronDoubleRightIcon /></Icon>
                                         </Panel>
                                     </Presets.TransitionFade>
                                 )}

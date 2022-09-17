@@ -9,13 +9,13 @@ const ServiceModel = require("../models/service-model");
 class TariffService {
     validField(field) {
         if (!field.title || typeof field.title !== 'string') {
-            throw ApiError.BadRequest("Field title invalid")
+            throw ApiError.BadRequest("Поле має недійсну назву")
         }
         if (!field.type || typeof field.type !== 'string') {
-            throw ApiError.BadRequest("Field type invalid")
+            throw ApiError.BadRequest("Поле має невизначений тип")
         }
         if (!field.value) {
-            throw ApiError.BadRequest("Field value invalid")
+            throw ApiError.BadRequest("Значення поля обов'язкове")
         }
     }
     async get (from = 0, limit = null) {
@@ -27,7 +27,7 @@ class TariffService {
     async create (name, description, price, terms, fields) {
         const exists = await TariffModel.findOne({name});
         if (exists) {
-            throw ApiError.BadRequest("Tariff already exists")
+            throw ApiError.BadRequest("Тариф вже існує")
         }
         const tariff = new TariffModel({
             name,
@@ -60,7 +60,7 @@ class TariffService {
     async remove (id) {
         const exists = await TariffModel.findById(ObjectId(id));
         if (!exists) {
-            throw ApiError.BadRequest("Tariff does not exists")
+            throw ApiError.BadRequest("Даний тариф не існує")
         }
         const tariffId = exists._id;
         const removedServices = await ServiceModel.deleteMany({tariff: tariffId});
@@ -73,7 +73,7 @@ class TariffService {
     async update (name, description, price, terms, fields) {
         const exists = await TariffModel.findOne({name});
         if (!exists) {
-            throw ApiError.BadRequest("Tariff does not exists")
+            throw ApiError.BadRequest("Даний тариф не існує")
         }
         if (description) {
             exists.description = description;

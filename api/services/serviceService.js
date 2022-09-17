@@ -56,7 +56,7 @@ class ServiceService {
     async create (name, date_to, description, date, tariff, customerId) {
         const fromTariff = await tariffService.getById(tariff);
         if (!fromTariff) {
-            throw ApiError.BadRequest("Service tariff does not exists")
+            throw ApiError.BadRequest("Не знайдено тарифу що відповідає цьому сервісу")
         }
         const newService = new ServiceModel({
             name,

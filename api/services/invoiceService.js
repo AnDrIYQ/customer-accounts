@@ -8,8 +8,8 @@ const messageService = require('../services/messageService');
 const serviceService = require('../services/serviceService')
 
 // Messages Notifications texts
-const MESSAGE_NOTIFICATION = (number) => `Your services has been charged with an invoice with a number ${number}`;
-const PAID_NOTIFICATION = (number) => `Invoice with a number ${number} was paid`;
+const MESSAGE_NOTIFICATION = (number) => `Новий рахунок за ваші сервіси в документі ${number}`;
+const PAID_NOTIFICATION = (number) => `Рахунок з номером ${number} позначено як оплачений`;
 
 class InvoiceService {
     async all (from = 0, limit = null) {
@@ -21,7 +21,7 @@ class InvoiceService {
     async charge(customerId, description, admin) {
         const services = await serviceService.getForChargeCustomer(customerId);
         if (!services.length) {
-            throw ApiError.BadRequest("All services already charged");
+            throw ApiError.BadRequest("Всі рахунки клієнта вже виставлено");
         }
         let total = 0;
         let items = [];

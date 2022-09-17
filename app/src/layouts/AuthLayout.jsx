@@ -33,7 +33,7 @@ const AuthLayout = () => {
                     <Grid VA="center" WRAP="no" GAP="gap-16">
                         <Icon><UserIcon /></Icon>
                         <Grid COL GAP VA="start">
-                            <Head>Clients Controller</Head>
+                            <Head>Авторизація</Head>
                         </Grid>
                     </Grid>
                 </Panel>

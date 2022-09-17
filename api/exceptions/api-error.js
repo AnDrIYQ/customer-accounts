@@ -9,15 +9,15 @@ module.exports = class ApiError extends Error {
     }
 
     static UnauthorizedError() {
-        return new ApiError(401, 'User not authorized');
+        return new ApiError(401, 'Користувач не авторизований');
     }
     static BadRequest(message, errors) {
         return new ApiError(400, message, errors);
     }
     static AccessError() {
-        return new ApiError(403, 'Access denied');
+        return new ApiError(403, 'Відмовлено у доступі');
     }
     static NotChanged() {
-        return new ApiError(503, 'Data Base not updated');
+        return new ApiError(503, 'Базу даних не оновлено');
     }
 }

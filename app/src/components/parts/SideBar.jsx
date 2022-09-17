@@ -19,28 +19,28 @@ const SideBar = () => {
     const navigate = useNavigate();
     const { authStore, appStore } = useContext(Context);
     const [menu, setMenu] = useState([
-        {title: 'Dashboard', to: '/', icon: HomeIcon, label: 'Home'},
-        {title: 'Config', to: '/config', icon: AdjustmentsIcon }
+        {title: 'Головна', to: '/', icon: HomeIcon, label: 'Home'},
+        {title: 'Налаштування', to: '/config', icon: AdjustmentsIcon }
     ]);
 
     useEffect(() => {
         if (authStore.user.customer) {
             setMenu([
-                {title: 'Dashboard', to: '/', icon: HomeIcon, label: 'Home'},
-                {title: 'Messages', to: '/messages', icon: ChatAltIcon},
-                {title: 'Services', to: '/services', icon: ServerIcon},
-                {title: 'Invoices', to: '/invoices', icon: CashIcon },
-                {title: 'Config', to: '/config', icon: AdjustmentsIcon },
-                {title: 'Logout', to: '/logout', icon: LogoutIcon }
+                {title: 'Головна', to: '/', icon: HomeIcon, label: 'Home'},
+                {title: 'Повідомлення', to: '/messages', icon: ChatAltIcon},
+                {title: 'Сервіси', to: '/services', icon: ServerIcon},
+                {title: 'Рахунки', to: '/invoices', icon: CashIcon },
+                {title: 'Налаштування', to: '/config', icon: AdjustmentsIcon },
+                {title: 'Вийти', to: '/logout', icon: LogoutIcon }
             ])
         } else {
             setMenu([
-                {title: 'Dashboard', to: '/', icon: HomeIcon, label: 'Home'},
-                {title: 'Customers', to: '/customers', icon: UserGroupIcon},
-                {title: 'Tariffs', to: '/tariffs', icon: TableIcon },
-                {title: 'Currencies', to: '/currencies', icon: CurrencyDollarIcon },
-                {title: 'Config', to: '/config', icon: AdjustmentsIcon },
-                {title: 'Logout', to: '/logout', icon: LogoutIcon }
+                {title: 'Головна', to: '/', icon: HomeIcon, label: 'Home'},
+                {title: 'Клієнти', to: '/customers', icon: UserGroupIcon},
+                {title: 'Тарифи', to: '/tariffs', icon: TableIcon },
+                {title: 'Валюти', to: '/currencies', icon: CurrencyDollarIcon },
+                {title: 'Налаштування', to: '/config', icon: AdjustmentsIcon },
+                {title: 'Вийти', to: '/logout', icon: LogoutIcon }
             ])
         }
     }, []);

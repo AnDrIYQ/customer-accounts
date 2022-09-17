@@ -3,7 +3,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import Notifications from "../components/parts/Notifications";
-import Modal from "../components/atomary/floats/Modal";
 import eventHandlers from "../events/handlers";
 import Header from "../components/parts/Header";
 import Footer from "../components/parts/Footer";
@@ -38,9 +37,9 @@ const MainLayout = () => {
                 eventHandlers.apply(this, [window.EVENT_BUS, notificationsStore, billingStore, authStore]);
                 notificationsStore.setNotifications(authStore?.user?.config?.notifications)
                 if (authStore.user.admin) {
-                    notificationsStore.message(`Welcome, ${authStore?.user?.admin?.username}`);
+                    notificationsStore.message(`Ласкаво просимо, ${authStore?.user?.admin?.username}`);
                 } else {
-                    notificationsStore.message(`Welcome, ${authStore?.user?.customer?.username}`);
+                    notificationsStore.message(`Ласкаво просимо, ${authStore?.user?.customer?.username}`);
                 }
                 // Theme color from config
                 appStore.updateColor(authStore?.user?.config?.theme_color);
@@ -52,7 +51,6 @@ const MainLayout = () => {
     return (
         <div className={"main-layout"}>
             <Notifications />
-            <Modal />
             <Header />
             <Grid FULL WRAP="no" NOGROW VA={"start"}>
                 <Sidebar />

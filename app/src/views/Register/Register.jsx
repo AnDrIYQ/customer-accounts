@@ -27,18 +27,18 @@ const Register = () => {
             <Grid FULL VA="center" GAP="gap-16" COL>
                 <Grid FULL VA="center" GAP COL>
                     <Icon><UserAddIcon /></Icon>
-                    <Head>Register</Head>
-                    <Text className="flex text-sm">Welcome, please register</Text>
+                    <Head>Реєстрація</Head>
+                    <Text className="flex text-sm">Ласкаво просимо, зареєструйтесь будь-ласка</Text>
                 </Grid>
-                <Input required type={"text"} setValue={setUsername} value={username} label={"Name"} placeholder={"Customer's name"} />
+                <Input required type={"text"} setValue={setUsername} value={username} label={"Ім'я"} placeholder={"Введіть своє ім'я"} />
                 <Input required type={"email"}
                        value={email} setValue={setEmail} label={"Email"} id={"email"} placeholder={"example@email.com"} />
                 <Input type={"password"}
-                       required value={password} setValue={setPassword} label={"Password"} id={"password"} />
-                <Textarea setValue={setBio} value={bio} label={"About you"} placeholder={"Biography"} />
+                       required value={password} setValue={setPassword} label={"Пароль"} id={"password"} />
+                <Textarea setValue={setBio} value={bio} label={"Про себе"} placeholder={"Не обов'язково"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button unwidth action={() => navigate('/login')}>Login</Button>
-                    <Button unwidth action={() => authStore.register(email, password, username, bio)}>Register</Button>
+                    <Button unwidth action={() => navigate('/login')}>Я вже клієнт</Button>
+                    <Button unwidth action={() => authStore.register(email, password, username, bio)}>Підтвердити</Button>
                 </Grid>
             </Grid>
         </Card>

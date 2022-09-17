@@ -16,7 +16,7 @@ class AuthService {
     async register (email, password, username, bio) {
         const user = await UserModel.findOne({email});
         if (user) {
-            throw ApiError.BadRequest(`User with email ${email} already exists`);
+            throw ApiError.BadRequest(`Користувач з логіном ${email} вже існує`);
         }
         const hashPassword = await bcrypt.hash(password, 3);
         const customerConfig = await ConfigModel.create({});
@@ -51,11 +51,11 @@ class AuthService {
     async login (email, password) {
         const user = await UserModel.findOne({email});
         if (!user) {
-            throw ApiError.BadRequest('This user does not exists');
+            throw ApiError.BadRequest('Користувача не існує');
         }
         const isPassEquals = await bcrypt.compare(password, user.password);
         if (!isPassEquals) {
-            throw ApiError.BadRequest('Invalid password');
+            throw ApiError.BadRequest('Невірний пароль');
         }
 
         let customerData;
@@ -66,7 +66,7 @@ class AuthService {
         const admin = await AdminModel.findById(user.admin_status);
 
         if (!admin && !customer) {
-            throw ApiError.BadRequest('This admin or customer not exists');
+            throw ApiError.BadRequest('Цього клієнта або адміністратора не існує');
         }
 
         if (customer) {
@@ -141,7 +141,7 @@ class AuthService {
     async registerAdmin(email, password, username, bio) {
         const user = await UserModel.findOne({email});
         if (user) {
-            throw ApiError.BadRequest(`Account with email ${email} already exists`);
+            throw ApiError.BadRequest(`Обліковий запис ${email} вже існує`);
         }
         const isPassAdmin = password === process.env.ADMIN_REGISTER_KEY;
         if (!isPassAdmin) {

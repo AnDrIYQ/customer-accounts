@@ -41,7 +41,7 @@ const Customers = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [invoices, setInvoices] = useState([]);
-    const [invoiceDescription, setInvoiceDescription] = useState(`Charge from ${dateFormat(new Date())}`);
+    const [invoiceDescription, setInvoiceDescription] = useState(`Рахунок за ${dateFormat(new Date())}`);
 
     const scrollMessages = () => {
         setTimeout(() => {
@@ -70,11 +70,11 @@ const Customers = () => {
     }
     const chargeAndInvoice = async () => {
         if (!invoiceDescription) {
-            notificationsStore.error("Charging impossible without description")
+            notificationsStore.error("Неможливо виставити рахунок без опису")
         }
         const response = await InvoiceService.charge(invoiceDescription, currentCustomer._id);
         if (response) {
-            notificationsStore.success("Charged new Invoice");
+            notificationsStore.success("Виставлено новий рахунок");
             navigate(location.pathname);
         }
     };
@@ -105,7 +105,7 @@ const Customers = () => {
     useEffect(() => {
         billingStore.getCustomers(0, null).then(list => {
             setCustomerColumns([
-                'Picture', 'Username', 'Email', 'ID', 'Theme Color'
+                'Зображення', "Ім'я", 'Email', 'ID', 'Колір теми'
             ])
             setCustomers([
                 ...list.map(customer => {
@@ -144,28 +144,28 @@ const Customers = () => {
                     >
 
                         <Tabs.Item
-                            title={<span id={"list_tab"}>List</span>}
+                            title={<span id={"list_tab"}>Список</span>}
                             className="tab"
                             icon={UsersIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Customers List</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Список клієнтів</Text>
                                 </Panel>
                                 {!empty(customers) && <DataTable columns={customerColumns} rows={customers} />}
-                                {empty(customers) && <Panel rounded><Text>No customers...</Text></Panel>}
+                                {empty(customers) && <Panel rounded><Text>Немає клієнтів...</Text></Panel>}
                             </Grid>
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"view_tab"}>View</span>}
+                            title={<span id={"view_tab"}>Вид</span>}
                             className="tab with_messages"
                             icon={EyeIcon}
                             disabled={empty(searchParams.get('id'))}
                         >
                             <Grid GAP={"gap-8"} NOGROW FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{currentCustomer?.username || "Customer's view"}</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{currentCustomer?.username || "Інформація про клієнта"}</Text>
                                 </Panel>
 
                                 <ComponentTransition key={v4()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
@@ -178,16 +178,16 @@ const Customers = () => {
                                                 </Grid>
                                                 <div className="pl-8 pr-4 text-sm font-normal h-full flex-col justify-start items-start self-end gap-8">
                                                     <span className={"text-lg mt-32"}><b>Email:</b> {currentCustomer.email}</span>
-                                                    <span className={"text-lg"}><b>About:</b> {currentCustomer.bio}</span>
-                                                    <span className={"text-lg mb-32"}><b>Color:</b> <span style={{color: currentCustomer.color}}>{currentCustomer.color}</span></span>
+                                                    <span className={"text-lg"}><b>Про клієнта:</b> {currentCustomer.bio}</span>
+                                                    <span className={"text-lg mb-32"}><b>Колір теми:</b> <span style={{color: currentCustomer.color}}>{currentCustomer.color}</span></span>
                                                 </div>
                                             </Toast>
                                         </Presets.TransitionFade>
                                     }
                                 </ComponentTransition>
 
-                                <Collapse opened title={<span id={"messages_container"}>Communications</span>}>
-                                    {empty(messages) && <span>Messages will be here...</span>}
+                                <Collapse opened title={<span id={"messages_container"}>Спілкування</span>}>
+                                    {empty(messages) && <span>Повідомлення відображатимуться тут...</span>}
                                     {!empty(messages) && messages.map(message =>
                                         <Toast key={message._id} className="space-x-4 p-16 mr-0 flex-nowrap max-w-xl divide-x divide-gray-200 dark:divide-gray-700">
                                             <Grid COL MG GAP customClasses={"grow-0"}>
@@ -206,35 +206,35 @@ const Customers = () => {
                                         </Toast>)
                                     }
                                     <Grid FULL NOGROW WRAP={"no"} GAP VA={"center"}>
-                                        <Textarea placeholder={"Write a message"} setValue={setNewMessage} value={newMessage} />
-                                        <Button action={sendMessage}>Send</Button>
+                                        <Textarea placeholder={"Напишіть повідомлення"} setValue={setNewMessage} value={newMessage} />
+                                        <Button action={sendMessage}>Надіслати</Button>
                                     </Grid>
                                 </Collapse>
 
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{currentCustomer?.username + "'s invoices" || "Customer's invoices"}</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{currentCustomer?.username + ", рахунки" || "Рахунки клієнта"}</Text>
                                 </Panel>
                                 <Grid FULL NOGROW WRAP={"no"} GAP VA={"center"}>
-                                    <Input placeholder={"Invoice description"} setValue={setInvoiceDescription} value={invoiceDescription} />
-                                    <Button action={chargeAndInvoice}>Charge</Button>
+                                    <Input placeholder={"Опис рахунку"} setValue={setInvoiceDescription} value={invoiceDescription} />
+                                    <Button action={chargeAndInvoice}>Виставити</Button>
                                 </Grid>
                                 <Grid FULL GAP VA={"center"}>
                                     {!empty(invoices) && invoices.map(invoice => <Card key={v4()} customClasses={"p-12 mt-8 flex !justify-start !items-start"}>
                                         <span>№: {invoice.number}</span>
                                         <span><b>{invoice.description}</b></span>
-                                        <span>Date: {dateFormat(new Date(invoice.date_of_charge))}</span>
-                                        <span>Total: {invoice.price}</span>
+                                        <span>Дата: {dateFormat(new Date(invoice.date_of_charge))}</span>
+                                        <span>Сума: {invoice.price}</span>
                                         <span onClick={() => makePaid(invoice._id, invoice.paid, invoice.was_read)} className={"self-end mt-8 theme_color py-4 px-16 rounded flex flex-nowrap gap-4 items-center"}>
-                                            <b>{!invoice.paid && invoice.was_read ? `Make Paid` : ''}</b>
-                                            <b>{!invoice.was_read && `Not seen`}</b>
+                                            <b>{!invoice.paid && invoice.was_read ? `Є оплата` : ''}</b>
+                                            <b>{!invoice.was_read && `Не переглянуто`}</b>
                                             {!invoice.paid && invoice.was_read && <Icon mini><CashIcon/></Icon>}
                                             {!invoice.paid && !invoice.was_read && <Icon mini><EyeOffIcon/></Icon>}
 
-                                            <b>{invoice.was_read && invoice.paid ? "Paid" : ''}</b>
+                                            <b>{invoice.was_read && invoice.paid ? "Оплачено" : ''}</b>
                                             {invoice.paid && <Icon mini><CheckIcon/></Icon>}
                                         </span>
                                     </Card>)}
-                                    {empty(invoices) && <span className={"mt-16"}>No invoices...</span>}
+                                    {empty(invoices) && <span className={"mt-16"}>Немає рахунків...</span>}
                                 </Grid>
                             </Grid>
                         </Tabs.Item>

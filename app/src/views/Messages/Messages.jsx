@@ -1,12 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
-import {DocumentRemoveIcon, EyeIcon, CalendarIcon} from "@heroicons/react/solid";
+import {EyeIcon, CalendarIcon} from "@heroicons/react/solid";
 import Preloaded from "../../components/atomary/containers/Preloaded";
 import {Tabs} from 'flowbite-react'
 import Grid from "../../components/atomary/containers/Grid";
-import Card from "../../components/atomary/viewers/Card";
-import {Avatar, Badge} from "@material-ui/core";
+import {Avatar} from "@material-ui/core";
 import {v4} from "uuid";
 import Image from "../../components/atomary/typography/Image";
 import {Toast} from "flowbite-react";
@@ -32,7 +31,7 @@ const Messages = () => {
                     aria-label="Tabs with icons"
                     style="underline">
 
-                    <Tabs.Item title="List"
+                    <Tabs.Item title="Список"
                                className="tab"
                                icon={EyeIcon}
                     >
@@ -65,7 +64,7 @@ const Messages = () => {
                                         <span className={"text-lg text-center"}>System</span>
                                     </Grid>
                                     <div className="pl-8 text-sm font-normal h-full flex-col justify-start items-start self-end gap-8">
-                                        <span className={"text-lg"} style={{minHeight: '64px'}}>No messages...</span>
+                                        <span className={"text-lg"} style={{minHeight: '64px'}}>Немає повідомлень...</span>
                                         <Grid FULL GAP HA={"end"} VA={"center"}>
                                             <div className={"rounded px-4 py-12 gap-4 flex items-center"}>
                                                 <Icon mini><CalendarIcon /></Icon>

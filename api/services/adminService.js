@@ -23,11 +23,11 @@ class AdminService {
     async updateAdmin (name, bio, accountInfo) {
         const user = await UserModel.findOne({email: accountInfo.email});
         if (!user) {
-            throw new ApiError.BadRequest("This admin does not exists");
+            throw new ApiError.BadRequest("Адміністратора не існує");
         }
         const admin = await AdminModel.findOne({_id: user.admin_status});
         if (!admin) {
-            throw new ApiError.BadRequest("This admin does not exists");
+            throw new ApiError.BadRequest("Цього адміністратора не існує");
         }
         if (accountInfo.id !== user._id.toString() || accountInfo.admin.id !== admin._id.toString()) {
             throw new ApiError.AccessError();

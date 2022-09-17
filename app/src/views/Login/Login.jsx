@@ -27,16 +27,16 @@ const Login = () => {
             <Grid VA="center" GAP="gap-16" COL>
                 <Grid FULL VA="center" GAP="gap-16">
                     <Icon><UserCircleIcon /></Icon>
-                    <Head>Login</Head>
-                    <Text className="text-sm">Sign in if you are a customer or administrator</Text>
+                    <Head>Вхід</Head>
+                    <Text className="text-sm">Увійдіть в обліковий запис якщо ви адміністратор або клієнт</Text>
                 </Grid>
                 <Input required type={"email"}
                        value={email} setValue={setEmail} label={"Email"} id={"email"} placeholder={"example@email.com"} />
                 <Input type={"password"}
-                       required value={password} setValue={setPassword} label={"Password"} id={"password"} />
+                       required value={password} setValue={setPassword} label={"Пароль"} id={"password"} />
                 <Grid VA="center" FULL GAP WRAP HA="space" MG="mt-8">
-                    <Button unwidth action={() => navigate('/register')}>Register</Button>
-                    <Button unwidth action={() => authStore.login(email, password)}>Login</Button>
+                    <Button unwidth action={() => navigate('/register')}>Зареєструватись</Button>
+                    <Button unwidth action={() => authStore.login(email, password)}>Увійти</Button>
                 </Grid>
             </Grid>
         </Card>

@@ -3,8 +3,7 @@ import Preloaded from "../../components/atomary/containers/Preloaded";
 import {Tabs} from "flowbite-react";
 import Grid from "../../components/atomary/containers/Grid";
 import {Context} from "../../index";
-import {DocumentAddIcon, TrashIcon, UsersIcon} from "@heroicons/react/outline";
-import DatePicker from "../../components/atomary/inputs/DatePicker";
+import {DocumentAddIcon, TrashIcon} from "@heroicons/react/outline";
 import {ClipboardListIcon, EyeIcon, PencilAltIcon} from "@heroicons/react/solid";
 import Panel from "../../components/atomary/viewers/Panel";
 import Text from "../../components/atomary/typography/Text";
@@ -113,7 +112,7 @@ const Tariff = () => {
     const tryCreateTariff = () => {
         newTariffFields.map(field => {
             if (empty(field.key) || empty(field.value)) {
-                notificationsStore.error("Field is not valid");
+                notificationsStore.error("Поле створено не правильно");
             }
         })
 
@@ -137,7 +136,7 @@ const Tariff = () => {
         appStore.loadRoute();
         TariffService.create(data).then(response => {
             if (response?.status === 200) {
-                notificationsStore.success("Tariff created");
+                notificationsStore.success("Тариф успішно створено");
                 billingStore.getTariffs(0, null);
                 appStore.makeRouteLoaded();
                 setTimeout(() => {
@@ -145,14 +144,14 @@ const Tariff = () => {
                 }, 500)
             } else {
                 appStore.makeRouteLoaded();
-                notificationsStore.error("Error during creating");
+                notificationsStore.error("Помилка під час створення");
             }
         })
     }
     const tryUpdateTariff = () => {
         editFields.map(field => {
             if (empty(field.title) || empty(field.value)) {
-                notificationsStore.error("Field is not valid");
+                notificationsStore.error("Поле змінено не правильно");
             }
         })
         const fields = editFields.map(field => {
@@ -175,7 +174,7 @@ const Tariff = () => {
         appStore.loadRoute();
         TariffService.update(data).then(response => {
             if (response?.status === 200) {
-                notificationsStore.success("Tariff changed");
+                notificationsStore.success("Тариф оновлено");
                 billingStore.getTariffs(0, null);
                 appStore.makeRouteLoaded();
                 setTimeout(() => {
@@ -183,7 +182,7 @@ const Tariff = () => {
                 }, 500)
             } else {
                 appStore.makeRouteLoaded();
-                notificationsStore.error("Error during change");
+                notificationsStore.error("Помилка під час оновлення");
             }
         })
     }
@@ -198,7 +197,7 @@ const Tariff = () => {
                     updateRemoveList(billingStore.tariffs);
                     setSearchParams([]);
                 }, 1500)
-                notificationsStore.success("Tariff removed");
+                notificationsStore.success("Тариф та його сервіси видалено");
             })
         })
     };
@@ -280,50 +279,50 @@ const Tariff = () => {
                     >
 
                         <Tabs.Item
-                            title={<span id={"list_tab"}>List</span>}
+                            title={<span id={"list_tab"}>Список</span>}
                             className="tab"
                             icon={ClipboardListIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>System tariffs</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Тарифи в системі</Text>
                                 </Panel>
                                 {!empty(tariffsList) && <DataTable columns={tariffColumns} rows={tariffsList} iconStart={<EyeIcon />} />}
-                                {empty(tariffsList) && <Panel rounded><Text>No tariffs...</Text></Panel>}
+                                {empty(tariffsList) && <Panel rounded><Text>Немає тарифів...</Text></Panel>}
                             </Grid>
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"add_tab"}>Create</span>}
+                            title={<span id={"add_tab"}>Створити</span>}
                             className="tab"
                             icon={DocumentAddIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Add a new one</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Створити новий</Text>
                                 </Panel>
 
                                 <Grid GAP={"gap-16"} customClasses={"grow-1 items-stretch"} FULL COL>
-                                    <Collapse opened title={"Main information"} className={"w-full"}>
+                                    <Collapse opened title={"Головна інформація"} className={"w-full"}>
                                         <Grid COL GAP={"gap-16"} VA={"end"} FULL>
-                                            <Input value={tariffName} setValue={setTariffName} type={"text"} placeholder={"Name"} label={"Tariff Name"} />
-                                            <Textarea value={tariffDescription} setValue={setTariffDescription} type={"text"} placeholder={"About tariff"} label={"Description"} />
-                                            <Input value={tariffPrice} setValue={setTariffPrice} type={"number"} placeholder={"In Customer's currency"} label={"Price"} />
-                                            <Input value={tariffTerms} setValue={setTariffTerms} type={"number"} placeholder={"Months"} label={"Terms"} />
+                                            <Input value={tariffName} setValue={setTariffName} type={"text"} placeholder={"Назвіть тариф"} label={"Назва тарифу"} />
+                                            <Textarea value={tariffDescription} setValue={setTariffDescription} type={"text"} placeholder={"Опишіть тариф"} label={"Опис"} />
+                                            <Input value={tariffPrice} setValue={setTariffPrice} type={"number"} placeholder={"У валюті клієнта"} label={"Ціна"} />
+                                            <Input value={tariffTerms} setValue={setTariffTerms} type={"number"} placeholder={"В місяцях"} label={"Термін"} />
                                             <Grid FULL HA={"end"}>
-                                                <Button action={tryCreateTariff} right>Create</Button>
+                                                <Button action={tryCreateTariff} right>Створити</Button>
                                             </Grid>
                                         </Grid>
                                     </Collapse>
-                                    <Collapse opened title={"Tariff fields"} className={"w-full"}>
+                                    <Collapse opened title={"Поля тарифу"} className={"w-full"}>
                                         <Grid COL GAP={"gap-16"} VA={"end"} FULL>
                                             {!empty(newTariffFields) && newTariffFields.map(field => {
                                                 return <div key={v4()} className={"flex gap-16 w-full items-center justify-end"}>
                                                     <Grid>
-                                                        <Input withEvent ungapped value={field.key} onTouch={val => setNewKey(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Field Name"} />
+                                                        <Input withEvent ungapped value={field.key} onTouch={val => setNewKey(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Назва поля"} />
                                                     </Grid>
                                                     <Grid HALF>
-                                                        <Input withEvent ungapped value={field.value} onTouch={val => setNewValue(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Value"} />
+                                                        <Input withEvent ungapped value={field.value} onTouch={val => setNewValue(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Значення"} />
                                                     </Grid>
                                                     <Grid>
                                                         <Button unwidth action={() => removeField(field.key)}>-</Button>
@@ -342,7 +341,7 @@ const Tariff = () => {
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"edit_tab"}>Edit</span>}
+                            title={<span id={"edit_tab"}>Редагувати</span>}
                             className="tab"
                             active={isEditForm}
                             icon={PencilAltIcon}
@@ -350,30 +349,30 @@ const Tariff = () => {
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Edit tariff</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>Змінити тариф</Text>
                                 </Panel>
 
                                 <Grid GAP={"gap-16"} customClasses={"grow-1 items-stretch"} FULL COL>
-                                    <Collapse opened title={"Change information"} className={"w-full"}>
+                                    <Collapse opened title={"Змінити інформацію"} className={"w-full"}>
                                         <Grid COL GAP={"gap-16"} VA={"end"} FULL>
-                                            <Input value={name} setValue={setName} type={"text"} placeholder={"Name"} disabled label={"Tariff Name"} />
-                                            <Textarea value={description} setValue={setDescription} type={"text"} placeholder={"About tariff"} label={"Description"} />
-                                            <Input value={price} setValue={setPrice} type={"number"} placeholder={"In Customer's currency"} label={"Price"} />
-                                            <Input value={terms} setValue={setTerms} type={"number"} placeholder={"Months"} label={"Terms"} />
+                                            <Input value={name} setValue={setName} type={"text"} placeholder={"Назва"} disabled label={"Назва тарифу"} />
+                                            <Textarea value={description} setValue={setDescription} type={"text"} placeholder={"Про тариф"} label={"Опис"} />
+                                            <Input value={price} setValue={setPrice} type={"number"} placeholder={"У валюті клієнта"} label={"Ціна"} />
+                                            <Input value={terms} setValue={setTerms} type={"number"} placeholder={"У місяцях"} label={"Термін"} />
                                             <Grid FULL HA={"end"}>
-                                                <Button action={tryUpdateTariff} right>Update</Button>
+                                                <Button action={tryUpdateTariff} right>Оновити</Button>
                                             </Grid>
                                         </Grid>
                                     </Collapse>
-                                    <Collapse opened title={"Change fields"} className={"w-full"}>
+                                    <Collapse opened title={"Змінити поля"} className={"w-full"}>
                                         <Grid COL GAP={"gap-16"} VA={"end"} FULL>
                                             {!empty(editFields) && editFields?.map(field => {
                                                 return <div key={v4()} className={"flex gap-16 w-full items-center justify-end"}>
                                                     <Grid>
-                                                        <Input withEvent ungapped value={field.title} onTouch={val => setEditKey(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Field Name"} />
+                                                        <Input withEvent ungapped value={field.title} onTouch={val => setEditKey(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Назва поля"} />
                                                     </Grid>
                                                     <Grid HALF>
-                                                        <Input withEvent ungapped value={field.value} onTouch={val => setEditValue(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Value"} />
+                                                        <Input withEvent ungapped value={field.value} onTouch={val => setEditValue(val, field)} custom setValue={()=>{}} type={"text"} placeholder={"Значення"} />
                                                     </Grid>
                                                     <Grid>
                                                         <Button unwidth action={() => removeEditField(field.title)}>-</Button>
@@ -392,16 +391,16 @@ const Tariff = () => {
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"remove_tab"}>Remove</span>}
+                            title={<span id={"remove_tab"}>Видалити</span>}
                             className="tab"
                             icon={TrashIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center item-center"} style={{width: "100%"}}>Remove tariffs</Text>
+                                    <Text customClasses={"justify-center item-center"} style={{width: "100%"}}>Видалити тарифи</Text>
                                 </Panel>
 
-                                {empty(removeList) && <Panel rounded><Text>No tariffs...</Text></Panel>}
+                                {empty(removeList) && <Panel rounded><Text>Немає тарифів...</Text></Panel>}
                                 {!empty(removeList) && <DataTable rows={removeList} iconEnd={<TrashIcon />} headless />}
                             </Grid>
                         </Tabs.Item>

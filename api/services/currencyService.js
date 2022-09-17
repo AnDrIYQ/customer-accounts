@@ -13,7 +13,7 @@ class CurrencyService {
     async createCurrency (name, symbol) {
         const currency = await CurrencyModel.findOne({name: name})
         if (currency) {
-            throw ApiError.BadRequest("Currency already exists");
+            throw ApiError.BadRequest("Валюта з цим іменем вже існує");
         }
         return new CurrencyDto(await CurrencyModel.create({
             name: name,
@@ -23,7 +23,7 @@ class CurrencyService {
     async updateCurrency (id, name, symbol) {
         const currency = await CurrencyModel.findOne({ _id: ObjectId(id) });
         if (!currency) {
-            throw ApiError.BadRequest("Currency with this id does not exists");
+            throw ApiError.BadRequest("Валюти з цим ідентифікатором не існує");
         }
         currency.name = name;
         if (symbol) {

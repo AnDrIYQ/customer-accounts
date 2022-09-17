@@ -11,12 +11,12 @@ class ConfigService {
     async updateConfigById(id, account, newData) {
         const config = await ConfigModel.findOne({_id: ObjectId(id)});
         if (!config) {
-            throw ApiError.BadRequest("Config with this id does not exists")
+            throw ApiError.BadRequest("Конфігурації не існує")
         }
         const configAdmin = await AdminModel.findOne({config: ObjectId(config._id)});
         const configCustomer = await CustomerModel.findOne({config: ObjectId(config._id)});
         if (!configAdmin && !configCustomer) {
-            throw ApiError.BadRequest("User with this config does not exists")
+            throw ApiError.BadRequest("Користувача з цими налаштуваннями не існує")
         }
         if (!configAdmin) {
             if (account.customer.id != ObjectId(configCustomer._id)) {
@@ -44,7 +44,7 @@ class ConfigService {
         const admin = await AdminModel.findOne({_id: user.admin_status});
         const customer = await CustomerModel.findOne({_id: user.customer_status});
         if (!admin && !customer) {
-            throw ApiError.BadRequest("User with this config does not exists")
+            throw ApiError.BadRequest("Користувача з цими налаштуваннями не існує")
         }
         if (!admin) {
             config = await ConfigModel.findOne({_id: ObjectId(customer.config)})
@@ -53,7 +53,7 @@ class ConfigService {
             config = await ConfigModel.findOne({_id: ObjectId(admin.config)})
         }
         if (!config) {
-            throw ApiError.BadRequest("There are no configs for this user")
+            throw ApiError.BadRequest("Немає конфігурації для цього облікового запису")
         }
         config.theme_color = newData.theme_color;
         config.notifications = newData.notifications;
@@ -70,7 +70,7 @@ class ConfigService {
     async get (id) {
         const config = await ConfigModel.findOne({_id: ObjectId(id)});
         if (!config) {
-            throw ApiError.BadRequest("Config with this id does not exists")
+            throw ApiError.BadRequest("Користувача з цим ідентифікатором не існує")
         }
         return {
             status: !!config,

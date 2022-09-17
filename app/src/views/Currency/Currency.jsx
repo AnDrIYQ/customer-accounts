@@ -40,11 +40,11 @@ const Currency = () => {
             symbol
         }).then((response) => {
             if (response.status === 200) {
-                notificationsStore.success(`Currency ${symbol} changed`);
+                notificationsStore.success(`Валюту ${symbol} змінено`);
                 toEdit.current.click();
                 appStore.fetchCurrencies();
             } else {
-                notificationsStore.error('Currency not changed');
+                notificationsStore.error('Валюту не змінено');
             }
         })
     }
@@ -52,10 +52,10 @@ const Currency = () => {
     const removeCurrency = (id) => {
         CurrencyService.remove(id).then((response) => {
             if (response.status === 200) {
-                notificationsStore.success('Currency removed');
+                notificationsStore.success('Валюту видалено');
                 appStore.fetchCurrencies();
             } else {
-                notificationsStore.error('Currency not removed');
+                notificationsStore.error('Валюту не видалено');
             }
         })
     }
@@ -66,11 +66,11 @@ const Currency = () => {
             symbol
         }).then((response) => {
             if (response.status === 200) {
-                notificationsStore.success(`Currency ${symbol} updated`);
+                notificationsStore.success(`Валюта ${symbol} змінена`);
                 toEdit.current.click();
                 appStore.fetchCurrencies();
             } else {
-                notificationsStore.error('Currency not created');
+                notificationsStore.error('Валюту не створено');
             }
         })
     };
@@ -85,17 +85,17 @@ const Currency = () => {
                     >
 
                         <Tabs.Item
-                            title="Add"
+                            title="Додати"
                             className="tab"
                             icon={DocumentAddIcon}
                         >
                             <Grid GAP={"gap-16"} NOGROW>
-                                <Collapse opened title={"Add a new currency"}>
+                                <Collapse opened title={"Додати нову валюту"}>
                                     <Grid COL FULL GAP={"gap-16"} VA={"end"} NOGROW>
-                                        <Input setValue={setTitle} type={"text"} placeholder={"USD"} label={"Currency Title"} />
-                                        <Input setValue={setSymbol} type={"text"} placeholder={"$"} label={"Currency Symbol"} maxLength={"1"} />
+                                        <Input setValue={setTitle} type={"text"} placeholder={"USD"} label={"Назва валюти"} />
+                                        <Input setValue={setSymbol} type={"text"} placeholder={"$"} label={"Символ"} maxLength={"1"} />
                                         <Grid FULL HA={"end"}>
-                                            <Button action={createCurrency} right>Add</Button>
+                                            <Button action={createCurrency} right>Додати</Button>
                                         </Grid>
                                     </Grid>
                                 </Collapse>
@@ -103,12 +103,12 @@ const Currency = () => {
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span ref={toEdit}>Actions</span>}
+                            title={<span ref={toEdit}>Дії</span>}
                             className="tab"
                             icon={PencilAltIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL VA={"start"} FULL>
-                                <Head>Currencies list:</Head>
+                                <Head>Список валют:</Head>
                                 <ComponentTransitionList key={v4()} enterAnimation={AnimationTypes.fade.enter} exitAnimation={AnimationTypes.fade.exit}>
                                     {!!appStore.currencies.length && appStore.currencies.slice(0).reverse().map((currency, index) => {
                                             return <Presets.TransitionSlideUp key={currency._id} className={"w-full"}>
@@ -120,13 +120,13 @@ const Currency = () => {
                                                         <span className={"text-lg"}>{currency.name}</span>
 
                                                         <Input custom spaced type={"text"}
-                                                               id={`id_${currency._id}_name`} value={currency.name} placeholder={"USD"} label={"Change Title"} />
+                                                               id={`id_${currency._id}_name`} value={currency.name} placeholder={"USD"} label={"Змінити назву"} />
                                                         <Input custom spaced type={"text"}
-                                                               id={`id_${currency._id}_symbol`} value={currency.symbol} placeholder={"$"} label={"Change Symbol"} maxLength={"1"} />
+                                                               id={`id_${currency._id}_symbol`} value={currency.symbol} placeholder={"$"} label={"Змінити символ"} maxLength={"1"} />
 
                                                         <Grid FULL GAP HA={"end"} VA={"center"}>
                                                             <div className={"rounded px-4 py-12 gap-4 flex justify-between items-center"}>
-                                                                <Button action={() => updateCurrency(currency._id)} right>Change</Button>
+                                                                <Button action={() => updateCurrency(currency._id)} right>Змінити</Button>
                                                                 <div className={"grow-0"} onClick={() => removeCurrency(currency._id)}><Icon><TrashIcon /></Icon></div>
                                                             </div>
                                                         </Grid>

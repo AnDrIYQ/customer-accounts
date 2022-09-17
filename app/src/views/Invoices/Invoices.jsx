@@ -63,13 +63,13 @@ const Invoices = () => {
                     >
 
                         <Tabs.Item
-                            title={<span id={"list_tab"}>List</span>}
+                            title={<span id={"list_tab"}>Список</span>}
                             className="tab"
                             icon={ClipboardListIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{authStore?.user?.customer?.username}'s Invoices</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{authStore?.user?.customer?.username}, рахунки</Text>
                                 </Panel>
 
                                 <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"} customClasses={"flex-col-reverse"}>
@@ -78,16 +78,16 @@ const Invoices = () => {
                                             <b>{invoice.description}</b>
                                         </h5>
                                         <p className="mx-8 mb-8">
-                                            <b>Number: </b>{invoice.number}
+                                            <b>Номер: </b>{invoice.number}
                                         </p>
                                         <p className={"mx-8 mb-8"}>
-                                            Total - {appStore.currencies.filter(currency => currency._id === authStore?.user?.config?.currency)[0]?.symbol || '$'}{invoice.price}
+                                            Сума - {appStore.currencies.filter(currency => currency._id === authStore?.user?.config?.currency)[0]?.symbol || '$'}{invoice.price}
                                         </p>
                                         <Grid FULL GAP customClasses={"m-8"}>
                                             <ListGroup className="w-full p-8 m-8 mr-32">
                                                 {!empty(invoice.items) && invoice.items.map(item =>
                                                     <ListGroup.Item key={v4()}>
-                                                        Service: {item.name}
+                                                        Сервіс: {item.name}
                                                     </ListGroup.Item>
                                                 )}
                                             </ListGroup>
@@ -95,19 +95,19 @@ const Invoices = () => {
                                         </Grid>
                                         <Grid FULL>
                                             <p className={"mx-8 py-4 px-8 mb-8 theme_color rounded"}>
-                                                Charged {dateFormat(new Date(invoice.date_of_charge))}
+                                                Виставлено {dateFormat(new Date(invoice.date_of_charge))}
                                             </p>
                                             <p className={"mx-8 py-4 px-8 mb-8 theme_color rounded flex flex-nowrap items-center gap-4"}>
-                                                {invoice.paid ? 'Paid' : 'Not paid'}
+                                                {invoice.paid ? 'Оплачено' : 'Не оплачено'}
                                                 {invoice.paid ? <Icon mini><CheckIcon /></Icon> : <Icon mini><ClockIcon /></Icon>}
                                             </p>
                                             <p onClick={() => makeInvoiceRead(invoice._id, invoice.was_read)} className={"mx-8 py-4 px-8 mb-8 theme_color rounded flex flex-nowrap items-center gap-4"}>
-                                                {invoice.was_read ? 'Seen' : 'Not seen'}
+                                                {invoice.was_read ? 'Переглянуто' : 'Не переглянуто'}
                                                 {invoice.was_read ? <Icon mini><EyeIcon /></Icon> : <Icon mini><EyeOffIcon /></Icon>}
                                             </p>
                                         </Grid>
                                     </Card>)}
-                                    {empty(invoices) && <span>No invoices...</span>}
+                                    {empty(invoices) && <span>Немає рахунків...</span>}
                                 </Grid>
                             </Grid>
                         </Tabs.Item>

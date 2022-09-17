@@ -10,7 +10,7 @@ const BreadCrumbs = () => {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const [urls, setUrls] = useState([
-        {text: 'Dashboard', link: '/', icon: <HomeIcon />, first: true},
+        {text: 'На головну', link: '/', icon: <HomeIcon />, first: true},
     ]);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const BreadCrumbs = () => {
             })
             if (searchParams.get('id')) {
                 breadcrumbs.push({
-                    text: "View",
+                    text: "Вид",
                     link: '/' + item + '?id=' + searchParams.get('id'),
                     first: false,
                 })

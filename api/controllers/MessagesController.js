@@ -9,7 +9,7 @@ class MessageController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await messageService.getById(getAccount(req), req.params.id);
             res.status(200).json(response);
@@ -21,7 +21,7 @@ class MessageController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await messageService.getCustomerMessages(getAccount(req), req.params.customer);
             res.status(200).json(response);
@@ -33,7 +33,7 @@ class MessageController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await messageService.write(
                 getAccount(req).admin,
@@ -50,7 +50,7 @@ class MessageController {
         try {
             const validationErrors = validationResult(req);
             if (!validationErrors.isEmpty()) {
-                return next(ApiError.BadRequest('Validation error', validationErrors.array()))
+                return next(ApiError.BadRequest('Помилка валідації', validationErrors.array()))
             }
             const response = await messageService.removeMessage(getAccount(req), req.params.id);
             res.status(200).json(response);

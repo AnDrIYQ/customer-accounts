@@ -42,10 +42,10 @@ const Services = () => {
     const removeService = (id) => {
         ServiceService.remove(id).then(response => {
             if (response.status === 200) {
-                notificationsStore.success('Service removed');
+                notificationsStore.success('Сервіс видалено');
                 appStore.loadRoute();
             } else {
-                notificationsStore.success('Service is not removed');
+                notificationsStore.success('Сервіс не видалено');
             }
         })
     };
@@ -65,12 +65,12 @@ const Services = () => {
         }
         ServiceService.add(data).then(response => {
             if (response.status === 200) {
-                notificationsStore.success('Service registered');
+                notificationsStore.success('Сервіс активовано');
                 appStore.loadRoute();
                 setSearchParams({id: response?.data?.data.id || null})
                 switchTab('list');
             } else {
-                notificationsStore.success('Error happened');
+                notificationsStore.success('Сталась помилка');
             }
         })
     }
@@ -109,7 +109,7 @@ const Services = () => {
             if (response.status === 200) {
                 if (empty(response?.data?.data)) {
                     switchTab('add');
-                    notificationsStore.warning('No services', 2);
+                    notificationsStore.warning('Немає сервісів', 2);
                     setServices([]);
                 }
                 setServices(response?.data?.data?.map(service => {
@@ -121,9 +121,9 @@ const Services = () => {
                         {iconContent: <TrashIcon />, meta: {action: true, fn: () => removeService(service._id)} }
                     ];
                 }) || [])
-                setServiceColumns(['---', 'Name', 'ID', 'Price', 'Tariff Name', 'Remove'])
+                setServiceColumns(['---', "Ім'я", 'ID', 'Ціна', "Назва тарифу", 'Видалити'])
             } else {
-                notificationsStore.warning('No services', 2);
+                notificationsStore.warning('Немає сервісів', 2);
                 setServices([]);
             }
             appStore.makeRouteLoaded();
@@ -139,38 +139,38 @@ const Services = () => {
                         style="underline"
                     >
                         <Tabs.Item
-                            title={<span id={"list_tab"}>List</span>}
+                            title={<span id={"list_tab"}>Список</span>}
                             className="tab"
                             icon={ClipboardListIcon}
                         >
                             <Grid GAP={"gap-8"} NOGROW COL FULL VA={"start"}>
                                 <Panel rounded>
-                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{authStore?.user?.customer?.username}'s services</Text>
+                                    <Text customClasses={"justify-center"} style={{width: "100%"}}>{authStore?.user?.customer?.username}, сервіси</Text>
                                 </Panel>
 
                                 {!empty(services) && <DataTable columns={serviceColumns} rows={services} iconStart={<EyeIcon />} />}
-                                {empty(services) && <Panel rounded><Text>No services...</Text></Panel>}
+                                {empty(services) && <Panel rounded><Text>Немає сервісів...</Text></Panel>}
                             </Grid>
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"view_tab"}>View</span>}
+                            title={<span id={"view_tab"}>Вид</span>}
                             className="tab"
                             icon={EyeIcon}
                             disabled={empty(searchParams.get('id'))}
                         >
                             {!empty(billingStore.services) && billingStore.services.filter(item => item._id === searchParams.get('id')).map(item =>
                                 <Grid FULL HA={"start"} VA={"start"} GAP key={v4()}>
-                                    <Collapse title={"Info"} opened>
+                                    <Collapse title={"Інформація"} opened>
                                         <Grid COL FULL GAP>
                                             <Panel rounded><Head>{item.name}</Head></Panel>
                                             <Toast className="w-full mt-16 max-w-none !p-16 gap-16 flex flex-col !items-start">
-                                                <Subhead>Service - "{item.name}"</Subhead>
-                                                <Text>From tariff "{item.tariff_name}"</Text>
+                                                <Subhead>Сервіс - "{item.name}"</Subhead>
+                                                <Text>На основі тарифу "{item.tariff_name}"</Text>
                                                 <Text>{item.description}</Text>
-                                                <Subhead>Dear {authStore?.user?.customer?.username || 'Client'}, this service will cost you {item.price}
-                                                    {(appStore?.currencies?.filter(item => item?._id === authStore?.user?.config?.currency)[0]?.symbol || '$')} for {item.terms} months</Subhead>
-                                                <Panel rounded><span className={"theme_color"}>Service active from {new Date(item.date).toLocaleString()} to {new Date(item.date_to).toLocaleString()}</span></Panel>
+                                                <Subhead>Шановний(а) {authStore?.user?.customer?.username || 'Клієнт'}, цей сервіс коштуватиме вам {item.price}
+                                                    {(appStore?.currencies?.filter(item => item?._id === authStore?.user?.config?.currency)[0]?.symbol || '$')} за {item.terms} {item.terms > 1 ? 'місяців' : 'місяць'}</Subhead>
+                                                <Panel rounded><span className={"theme_color"}>Сервіс буде вважатись активним з {new Date(item.date).toLocaleString()} до {new Date(item.date_to).toLocaleString()}</span></Panel>
                                             </Toast>
                                         </Grid>
                                     </Collapse>
@@ -179,28 +179,28 @@ const Services = () => {
                         </Tabs.Item>
 
                         <Tabs.Item
-                            title={<span id={"add_tab"}>Add</span>}
+                            title={<span id={"add_tab"}>Додати</span>}
                             className="tab"
                             icon={DocumentAddIcon}
                         >
                             <Grid FULL HA={"start"} VA={"start"} GAP={"gap-16"} NOGROW>
-                                <Panel rounded><Text>Register service</Text></Panel>
+                                <Panel rounded><Text>Реєстрація сервісу</Text></Panel>
                                 <Grid FULL GAP>
-                                    <label htmlFor="tariff_select">Select tariff</label>
+                                    <label htmlFor="tariff_select">Виберіть тариф</label>
                                     <Select id={"tariff_select"} onChange={(value) => setTariff(value)} options={tariffsSelect} />
                                 </Grid>
-                                <Input value={newName} setValue={setNewName} type={"text"} placeholder={"Service Name"} label={"Name"} />
-                                <Input value={newDescription} setValue={setNewDescription} type={"text"} placeholder={"About service"} label={"Description"} />
+                                <Input value={newName} setValue={setNewName} type={"text"} placeholder={"Назвіть сервіс"} label={"Назва сервісу"} />
+                                <Input value={newDescription} setValue={setNewDescription} type={"text"} placeholder={"Опишіть сервіс"} label={"Опис"} />
                                 <Grid FULL GAP>
-                                    Start Date
-                                    <DatePicker value={startDate} setValue={setStartDate} label={"Select Start date"} />
+                                    Дата початку
+                                    <DatePicker value={startDate} setValue={setStartDate} label={"Дата початку"} />
                                 </Grid>
                                 <Grid FULL GAP>
-                                    End Date
-                                    <DatePicker value={endDate} setValue={setEndDate} label={"Select Start date"} />
+                                    Дата кінця
+                                    <DatePicker value={endDate} setValue={setEndDate} label={"Дата кінця"} />
                                 </Grid>
                                 <Grid FULL HA={"center"}>
-                                    <Button action={addService}>Add</Button>
+                                    <Button action={addService}>Активувати</Button>
                                 </Grid>
                             </Grid>
                         </Tabs.Item>
